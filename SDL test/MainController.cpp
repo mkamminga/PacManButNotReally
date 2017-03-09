@@ -56,12 +56,6 @@ void MainController::update()
 {
 	auto graph = game.getGraph();
 	auto nodes = graph->getNodes();
-
-	auto hare = game.getHare();
-	auto cow = game.getCow();
-
-	cow->update();
-	hare->update();
 }
 
 void MainController::shutdown()

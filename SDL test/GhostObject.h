@@ -4,7 +4,10 @@ class GhostObject :
 	public GamePlayObject
 {
 public:
-	GhostObject();
-	~GhostObject();
+	void accept(BaseVisitor* bs ) {
+		bs->visit(this);
+	}
+
+	virtual void update();
 };
 

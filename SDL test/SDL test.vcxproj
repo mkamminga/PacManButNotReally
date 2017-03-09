@@ -154,42 +154,36 @@
   <ItemGroup>
     <ClCompile Include="AStarSearch.cpp" />
     <ClCompile Include="BaseObject.cpp" />
-    <ClCompile Include="CowChasing.cpp" />
-    <ClCompile Include="CowObject.cpp" />
-    <ClCompile Include="CowWandering.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GamePlayObject.cpp" />
+    <ClCompile Include="GhostObject.cpp" />
     <ClCompile Include="GraphNode.cpp" />
-    <ClCompile Include="GunItem.cpp" />
-    <ClCompile Include="HareObject.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainController.cpp" />
     <ClCompile Include="MainVisitor.cpp" />
     <ClCompile Include="NodeEdge.cpp" />
+    <ClCompile Include="PacManObject.cpp" />
     <ClCompile Include="PillItem.cpp" />
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="SparseGraph.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\SDL test\SDL test\PillItem.h" />
     <ClInclude Include="AStarSearch.h" />
     <ClInclude Include="BaseObject.h" />
     <ClInclude Include="BaseState.h" />
     <ClInclude Include="BaseVisitiable.h" />
     <ClInclude Include="BaseVisitor.h" />
-    <ClInclude Include="CowChasing.h" />
-    <ClInclude Include="CowObject.h" />
-    <ClInclude Include="CowWandering.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GamePlayObject.h" />
+    <ClInclude Include="GhostObject.h" />
     <ClInclude Include="GraphNode.h" />
-    <ClInclude Include="GunItem.h" />
-    <ClInclude Include="HareObject.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="MainController.h" />
     <ClInclude Include="MainVisitor.h" />
     <ClInclude Include="NodeEdge.h" />
-    <ClInclude Include="PillItem.h" />
+    <ClInclude Include="PacManObject.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="SparseGraph.h" />
     <ClInclude Include="TypeDefs.h" />

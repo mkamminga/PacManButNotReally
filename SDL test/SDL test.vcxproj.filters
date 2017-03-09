@@ -93,26 +93,17 @@
     <ClCompile Include="BaseObject.cpp">
       <Filter>Source Files\Models\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="CowObject.cpp">
-      <Filter>Source Files\Models\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="HareObject.cpp">
-      <Filter>Source Files\Models\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="CowWandering.cpp">
-      <Filter>Source Files\Models\Objects\States</Filter>
-    </ClCompile>
-    <ClCompile Include="GunItem.cpp">
-      <Filter>Source Files\Models\Items</Filter>
-    </ClCompile>
     <ClCompile Include="GamePlayObject.cpp">
       <Filter>Source Files\Models\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="CowChasing.cpp">
-      <Filter>Source Files\Models\Objects\States</Filter>
-    </ClCompile>
     <ClCompile Include="Random.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GhostObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PacManObject.cpp">
+      <Filter>Source Files\Models\Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -146,9 +137,6 @@
     <ClInclude Include="MainController.h">
       <Filter>Header Files\Controllers</Filter>
     </ClInclude>
-    <ClInclude Include="PillItem.h">
-      <Filter>Header Files\Models\Objects\Items</Filter>
-    </ClInclude>
     <ClInclude Include="Item.h">
       <Filter>Header Files\Models\Objects\Items</Filter>
     </ClInclude>
@@ -158,26 +146,20 @@
     <ClInclude Include="GamePlayObject.h">
       <Filter>Header Files\Models\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="CowObject.h">
-      <Filter>Header Files\Models\Objects\GamePlay</Filter>
-    </ClInclude>
-    <ClInclude Include="HareObject.h">
-      <Filter>Header Files\Models\Objects\GamePlay</Filter>
-    </ClInclude>
     <ClInclude Include="BaseState.h">
       <Filter>Header Files\Models\Objects\GamePlay\States</Filter>
-    </ClInclude>
-    <ClInclude Include="CowWandering.h">
-      <Filter>Header Files\Models\Objects\GamePlay\States</Filter>
-    </ClInclude>
-    <ClInclude Include="GunItem.h">
-      <Filter>Header Files\Models\Objects\Items</Filter>
     </ClInclude>
     <ClInclude Include="Random.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CowChasing.h">
-      <Filter>Header Files\Models\Objects\GamePlay\States</Filter>
+    <ClInclude Include="PacManObject.h">
+      <Filter>Header Files\Models\Objects\GamePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="GhostObject.h">
+      <Filter>Header Files\Models\Objects\GamePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\SDL test\SDL test\PillItem.h">
+      <Filter>Header Files\Models\Objects\Items</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

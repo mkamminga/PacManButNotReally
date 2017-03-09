@@ -2,7 +2,6 @@
 #include "GraphNode.h"
 #include "NodeEdge.h"
 #include "PillItem.h"
-#include "GunItem.h"
 
 void Game::start()
 {
@@ -251,16 +250,6 @@ void Game::start()
 	{
 		objects.push_back(node);
 	}
-}
-
-std::shared_ptr<CowObject> Game::getCow()
-{
-	return cow;
-}
-
-std::shared_ptr<HareObject> Game::getHare()
-{
-	return hare;
 }
 
 std::shared_ptr<SparseGraph> Game::getGraph()

@@ -21,11 +21,10 @@ private:
 public:
 	void setRenderer(SDL_Renderer* renderer);
 	void draw(std::vector<std::shared_ptr<BaseVisitiable>>& objects);
-	virtual void visit(CowObject* cow);
 	virtual void visit(GraphNode* graphNode);
-	virtual void visit(HareObject* hare);
-	virtual void visit(PillItem* hare);
-	virtual void visit(GunItem* node);
+	virtual void visit(PillItem* pillItem);
+	virtual void visit(GhostObject* ghost);
+	virtual void visit(PacManObject* pacman);
 	void drawObjectTexture(BaseObject* object, SDL_Texture * texture, SDL_Rect* position);
 
 	~MainVisitor()
