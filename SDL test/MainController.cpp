@@ -8,8 +8,8 @@ void MainController::start()
 		if (SDL_CreateWindowAndRenderer(1200, 600, 0, &window, &renderer) == 0) {
 
 			mainView.setRenderer(renderer);
-			std::thread UIUpdateFrame{ &MainController::play, this };
-			feel();
+			std::thread UIUpdateFrame{ &MainController::play, this }; // start the game loop
+			feel(); // start feeling, proccess user input
 			UIUpdateFrame.detach(); // do not wait for sleep, exit on stop
 		}
 	}
@@ -21,10 +21,17 @@ void MainController::play()
 {
 	game.start();
 
+	using clock = std::chrono::high_resolution_clock;
+	auto lastTime = clock::now();
+	auto currentTime = lastTime;
 	while (!done) {
-		update();
+		currentTime = clock::now();
+		long diff = std::chrono::duration_cast< std::chrono::milliseconds>(currentTime - lastTime).count();
+		auto d = (double)(1 / 600.0 * diff);
+		update(d);
 		draw();
-		std::this_thread::sleep_for(std::chrono::seconds(1));
+		lastTime = currentTime;
+		std::this_thread::sleep_for(std::chrono::milliseconds(20));
 	}
 }
 
@@ -52,10 +59,14 @@ int MainController::feel()
 	return 0;
 }
 
-void MainController::update()
+void MainController::update(double deltaTime)
 {
-	auto graph = game.getGraph();
-	auto nodes = graph->getNodes();
+	auto updateableObjects = game.gamePlayObjects();
+
+	for (auto object : updateableObjects)
+	{
+		object->update(deltaTime);
+	}
 }
 
 void MainController::shutdown()

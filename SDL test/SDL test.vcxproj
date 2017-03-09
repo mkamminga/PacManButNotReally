@@ -163,6 +163,7 @@
     <ClCompile Include="MainController.cpp" />
     <ClCompile Include="MainVisitor.cpp" />
     <ClCompile Include="NodeEdge.cpp" />
+    <ClCompile Include="PacManBaseState.cpp" />
     <ClCompile Include="PacManObject.cpp" />
     <ClCompile Include="PillItem.cpp" />
     <ClCompile Include="Random.cpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="MainController.h" />
     <ClInclude Include="MainVisitor.h" />
     <ClInclude Include="NodeEdge.h" />
+    <ClInclude Include="PacManBaseState.h" />
     <ClInclude Include="PacManObject.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="SparseGraph.h" />

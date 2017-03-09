@@ -2,6 +2,8 @@
 #include "GraphNode.h"
 #include "NodeEdge.h"
 #include "PillItem.h"
+#include "PacManObject.h"
+#include "GhostObject.h"
 
 void Game::start()
 {
@@ -77,12 +79,19 @@ void Game::start()
 	vertex244->addItem(std::make_shared<PillItem>());
 	vertex245->addItem(std::make_shared<PillItem>());
 	vertex246->addItem(std::make_shared<PillItem>());
+	//pacman
+	auto packman = std::make_shared<PacManObject>();
+	vertex250->addObject(packman);
 
-	/*auto vertex103 = std::make_shared<GraphNode>(34, 48, graph); // Spawn spookje
-	auto vertex114 = std::make_shared<GraphNode>(541, 45, graph); // Spawn spookje
-	auto vertex157 = std::make_shared<GraphNode>(37, 562, graph); // Spawn spookje
-	auto vertex162 = std::make_shared<GraphNode>(541, 568, graph); // Spawn spookje
-	auto vertex250 = std::make_shared<GraphNode>(290, 345, graph); // Spawn pacman*/
+	auto ghost1 = std::make_shared<GhostObject>();
+	auto ghost2 = std::make_shared<GhostObject>();
+	auto ghost3 = std::make_shared<GhostObject>();
+	auto ghost4 = std::make_shared<GhostObject>();
+	vertex103->addObject(ghost1);
+	vertex114->addObject(ghost2);
+	vertex157->addObject(ghost3);
+	vertex162->addObject(ghost4);
+
 	
 	graph->addNode( vertex104 );
 	graph->addNode( vertex105 );
@@ -250,6 +259,12 @@ void Game::start()
 	{
 		objects.push_back(node);
 	}
+
+	updateableGamePlayObjects.push_back(packman);
+	updateableGamePlayObjects.push_back(ghost1);
+	updateableGamePlayObjects.push_back(ghost2);
+	updateableGamePlayObjects.push_back(ghost3);
+	updateableGamePlayObjects.push_back(ghost4);
 }
 
 std::shared_ptr<SparseGraph> Game::getGraph()
@@ -260,4 +275,9 @@ std::shared_ptr<SparseGraph> Game::getGraph()
 std::vector<std::shared_ptr<BaseVisitiable>>& Game::gameObjects()
 {
 	return objects;
+}
+
+std::vector<std::shared_ptr<GamePlayObject>>& Game::gamePlayObjects()
+{
+	return updateableGamePlayObjects;
 }

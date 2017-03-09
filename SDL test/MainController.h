@@ -20,7 +20,7 @@ private:
 	SDL_Renderer* renderer = NULL;
 
 	int feel();
-	void update();
+	void update(double deltaTime);
 	void draw();
 	void shutdown();
 public:

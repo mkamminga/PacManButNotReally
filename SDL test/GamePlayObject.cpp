@@ -66,8 +66,3 @@ void GamePlayObject::useItems()
 		}
 	}
 }
-
-std::shared_ptr<GamePlayObject> GamePlayObject::getTarget()
-{
-	return target;
-}

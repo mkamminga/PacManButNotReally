@@ -11,6 +11,8 @@ void MainVisitor::setRenderer(SDL_Renderer * renderer)
 {
 	this->renderer = renderer;
 	textures["map"]		= IMG_LoadTexture(renderer, "images/xid-2600189_1.png"); 
+	textures["pacman"]	= IMG_LoadTexture(renderer, "images/xid-2600194_1.png"); 
+	textures["ghost"] = IMG_LoadTexture(renderer, "images/xid-2600193_1.png");
 	textures["pill"]	= IMG_LoadTexture(renderer, "images/pill.png");
 }
 
@@ -82,25 +84,25 @@ void MainVisitor::visit(PillItem * pill)
 
 void MainVisitor::visit(GhostObject * ghost)
 {
-	position.w = 20;
-	position.h = 20;
+	position.w = 35;
+	position.h = 35;
 
-	drawObjectTexture(ghost, textures["pill"], &position);
+	drawObjectTexture(ghost, textures["ghost"], &position);
 }
 
 void MainVisitor::visit(PacManObject * pacman)
 {
-	position.w = 20;
-	position.h = 20;
+	position.w = 35;
+	position.h = 35;
 
-	drawObjectTexture(pacman, textures["pill"], &position);
+	drawObjectTexture(pacman, textures["pacman"], &position);
 }
 
 
 void MainVisitor::drawObjectTexture(BaseObject * object, SDL_Texture * texture, SDL_Rect * position)
 {
-	position->x = object->getX();
-	position->y = object->getY();
+	position->x = (object->getX() - (position->w / 2));
+	position->y = (object->getY() - (position->h / 2));
 
 	SDL_RenderCopy(renderer, texture, NULL, position);
 }

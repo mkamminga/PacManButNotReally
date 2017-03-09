@@ -18,8 +18,6 @@ private:
 	vector<std::shared_ptr<GamePlayObject>> baseObjects;
 	vector<std::shared_ptr<Item>> items;
 	std::shared_ptr<SparseGraph> graph;
-
-	void recalculateBaseObjectsPosition(int xOffset, int yOffset, int number, vector<std::shared_ptr<Item>>& objects);
 public:
 	GraphNode(int x, int y, std::shared_ptr<SparseGraph> graph) : graph(graph), BaseObject(x, y) {}
 	virtual ~GraphNode() {}

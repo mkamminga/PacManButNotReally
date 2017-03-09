@@ -99,11 +99,14 @@
     <ClCompile Include="Random.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GhostObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="PacManObject.cpp">
       <Filter>Source Files\Models\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="GhostObject.cpp">
+      <Filter>Source Files\Models\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="PacManBaseState.cpp">
+      <Filter>Source Files\Models\Objects\States</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -160,6 +163,9 @@
     </ClInclude>
     <ClInclude Include="..\..\SDL test\SDL test\PillItem.h">
       <Filter>Header Files\Models\Objects\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="PacManBaseState.h">
+      <Filter>Header Files\Models\Objects\GamePlay\States</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
