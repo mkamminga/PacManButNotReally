@@ -13,6 +13,7 @@ struct Route {
 
 struct ShortestRoute
 {
+	bool initialized = false;
 	std::shared_ptr<GraphNode> start = nullptr;
 	std::shared_ptr<GraphNode> goal = nullptr;
 	std::shared_ptr<Route> nextRoute = nullptr;
@@ -38,11 +39,10 @@ class SparseGraph
 {
 private:
 	vector<std::shared_ptr<GraphNode>> nodes;
-	ShortestRoute lastShortestRoute;
 public:
 	void addNode(std::shared_ptr<GraphNode>);
 	const vector<std::shared_ptr<GraphNode>>& getNodes() const;
-	ShortestRoute& shortestPathTo(std::shared_ptr<GraphNode> start, std::shared_ptr<GraphNode> goal);
+	void shortestPathTo(ShortestRoute& lastShortestRoute, std::shared_ptr<GraphNode> start, std::shared_ptr<GraphNode> goal);
 	std::shared_ptr<Route> search(std::shared_ptr<GraphNode> start, std::shared_ptr<GraphNode> goal);
 	const double calcDistance(const std::shared_ptr<GraphNode>, const std::shared_ptr<GraphNode>) const;
 };

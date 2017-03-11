@@ -18,7 +18,6 @@ std::shared_ptr<GraphNode> GamePlayObject::getNode()
 	return currentNode;
 }
 
-
 void GamePlayObject::setState(std::unique_ptr<BaseState> state)
 {
 	currentState = move(state);
@@ -65,4 +64,9 @@ void GamePlayObject::useItems()
 			currentNode->removeItem(item);
 		}
 	}
+}
+
+std::shared_ptr<GamePlayObject> GamePlayObject::getTarget()
+{
+	return target;
 }

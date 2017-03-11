@@ -4,7 +4,7 @@ class PacManObject :
 	public GamePlayObject
 {
 public:
-	PacManObject() : GamePlayObject(0, 0) {}
+	PacManObject() : GamePlayObject(0, 0, nullptr) {}
 	void accept(BaseVisitor* bs) {
 		bs->visit(this);
 	}

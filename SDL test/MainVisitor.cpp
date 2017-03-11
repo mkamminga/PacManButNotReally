@@ -6,14 +6,18 @@
 #include "PillItem.h"
 #include "GhostObject.h"
 #include "PacManObject.h"
+#include "GhostWanderingState.h"
+#include "GhostChasingState.h"
 
 void MainVisitor::setRenderer(SDL_Renderer * renderer)
 {
 	this->renderer = renderer;
-	textures["map"]		= IMG_LoadTexture(renderer, "images/xid-2600189_1.png"); 
-	textures["pacman"]	= IMG_LoadTexture(renderer, "images/xid-2600194_1.png"); 
-	textures["ghost"] = IMG_LoadTexture(renderer, "images/xid-2600193_1.png");
-	textures["pill"]	= IMG_LoadTexture(renderer, "images/pill.png");
+	textures["map"]							= IMG_LoadTexture(renderer, "images/xid-2600189_1.png"); 
+	textures["pacman"]						= IMG_LoadTexture(renderer, "images/xid-2600194_1.png"); 
+	textures["ghost_wandering"]				= IMG_LoadTexture(renderer, "images/xid-2600193_1.png");
+	textures["ghost_chasing"]				= IMG_LoadTexture(renderer, "images/xid-2600191_1.png");
+	textures["ghost"]						= IMG_LoadTexture(renderer, "images/xid-2600193_1.png");
+	textures["pill"]						= IMG_LoadTexture(renderer, "images/pill.png");
 }
 
 void MainVisitor::draw(std::vector<std::shared_ptr<BaseVisitiable>>& objects)
@@ -96,6 +100,22 @@ void MainVisitor::visit(PacManObject * pacman)
 	position.h = 35;
 
 	drawObjectTexture(pacman, textures["pacman"], &position);
+}
+
+void MainVisitor::visit(GhostWanderingState * ghostWandering, BaseObject * bo)
+{
+	position.w = 35;
+	position.h = 35;
+
+	drawObjectTexture(bo, textures["ghost_wandering"], &position);
+}
+
+void MainVisitor::visit(GhostChasingState * ghostChasing, BaseObject * bo)
+{
+	position.w = 35;
+	position.h = 35;
+
+	drawObjectTexture(bo, textures["ghost_chasing"], &position);
 }
 
 

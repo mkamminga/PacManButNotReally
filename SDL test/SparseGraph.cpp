@@ -9,9 +9,9 @@ const vector<std::shared_ptr<GraphNode>>& SparseGraph::getNodes() const {
 	return nodes;
 }
 
-ShortestRoute & SparseGraph::shortestPathTo(std::shared_ptr<GraphNode> start, std::shared_ptr<GraphNode> goal)
+void SparseGraph::shortestPathTo(ShortestRoute& lastShortestRoute, std::shared_ptr<GraphNode> start, std::shared_ptr<GraphNode> goal)
 {
-	if (lastShortestRoute.start != start || lastShortestRoute.goal != goal)
+	if (!lastShortestRoute.initialized || lastShortestRoute.start != start || lastShortestRoute.goal != goal)
 	{
 		//reset
 		lastShortestRoute.start = start;
@@ -19,9 +19,12 @@ ShortestRoute & SparseGraph::shortestPathTo(std::shared_ptr<GraphNode> start, st
 		lastShortestRoute.nextRoute = nullptr;
 		//(re)calculate
 		lastShortestRoute.nextRoute = search(start, goal);
-	}
 
-	return lastShortestRoute;
+		if (!lastShortestRoute.initialized)
+		{
+			lastShortestRoute.initialized = true;
+		}
+	}
 }
 
 const double SparseGraph::calcDistance(const std::shared_ptr<GraphNode> from, const std::shared_ptr<GraphNode> to) const

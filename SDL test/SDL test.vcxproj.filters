@@ -96,9 +96,6 @@
     <ClCompile Include="GamePlayObject.cpp">
       <Filter>Source Files\Models\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Random.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="PacManObject.cpp">
       <Filter>Source Files\Models\Objects</Filter>
     </ClCompile>
@@ -107,6 +104,18 @@
     </ClCompile>
     <ClCompile Include="PacManBaseState.cpp">
       <Filter>Source Files\Models\Objects\States</Filter>
+    </ClCompile>
+    <ClCompile Include="GhostWanderingState.cpp">
+      <Filter>Source Files\Models\Objects\States</Filter>
+    </ClCompile>
+    <ClCompile Include="GhostChasingState.cpp">
+      <Filter>Source Files\Models\Objects\States</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseState.cpp">
+      <Filter>Source Files\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Random.cpp">
+      <Filter>Source Files\Base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -133,9 +142,6 @@
     </ClInclude>
     <ClInclude Include="TypeDefs.h">
       <Filter>Header Files\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseVisitiable.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MainController.h">
       <Filter>Header Files\Controllers</Filter>
@@ -166,6 +172,18 @@
     </ClInclude>
     <ClInclude Include="PacManBaseState.h">
       <Filter>Header Files\Models\Objects\GamePlay\States</Filter>
+    </ClInclude>
+    <ClInclude Include="GhostWanderingState.h">
+      <Filter>Header Files\Models\Objects\GamePlay\States</Filter>
+    </ClInclude>
+    <ClInclude Include="GhostChasingState.h">
+      <Filter>Header Files\Models\Objects\GamePlay\States</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseStateVisitable.h">
+      <Filter>Header Files\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseVisitiable.h">
+      <Filter>Header Files\Base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

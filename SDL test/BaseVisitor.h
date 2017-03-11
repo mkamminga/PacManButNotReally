@@ -5,6 +5,9 @@ class NodeEdge;
 class PillItem;
 class GhostObject;
 class PacManObject;
+class GhostWanderingState;
+class GhostChasingState;
+class BaseObject;
 
 class BaseVisitor
 {
@@ -13,5 +16,6 @@ public:
 	virtual void visit(PillItem* pillItem) = 0;
 	virtual void visit(GhostObject* ghost) = 0;
 	virtual void visit(PacManObject* pacman) = 0;
+	virtual void visit(GhostWanderingState* ghostWandering, BaseObject* bo) = 0;
+	virtual void visit(GhostChasingState* ghostWandering, BaseObject* bo) = 0;
 };
-
