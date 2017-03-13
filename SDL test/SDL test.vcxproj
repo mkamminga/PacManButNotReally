@@ -155,8 +155,10 @@
     <ClCompile Include="AStarSearch.cpp" />
     <ClCompile Include="BaseObject.cpp" />
     <ClCompile Include="BaseState.cpp" />
+    <ClCompile Include="BasicTimer.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GamePlayObject.cpp" />
+    <ClCompile Include="GhostChasingPillState.cpp" />
     <ClCompile Include="GhostChasingState.cpp" />
     <ClCompile Include="GhostObject.cpp" />
     <ClCompile Include="GhostWanderingState.cpp" />
@@ -180,8 +182,10 @@
     <ClInclude Include="BaseStateVisitable.h" />
     <ClInclude Include="BaseVisitiable.h" />
     <ClInclude Include="BaseVisitor.h" />
+    <ClInclude Include="BasicTimer.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GamePlayObject.h" />
+    <ClInclude Include="GhostChasingPillState.h" />
     <ClInclude Include="GhostChasingState.h" />
     <ClInclude Include="GhostObject.h" />
     <ClInclude Include="GhostWanderingState.h" />

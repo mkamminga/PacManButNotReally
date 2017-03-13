@@ -9,40 +9,34 @@ void GhostChasingState::update(double deltaTime)
 
 	auto currentNode = object->getNode();
 
-	auto nextTarget = lastRoute.nextRoute->node;
+	if (!nextTarget)
+	{
+		nextTarget = lastRoute.nextRoute->node;
+	}
+	else if (nextTarget && nextTarget != lastRoute.nextRoute->node)
+	{
+		nextTarget = object->getNode();
+	}
 
 	if (nextTarget->getX() == object->getX() && nextTarget->getY() == object->getY())
 	{
-		nextTarget->addObject(object);
-
-		if (lastRoute.nextRoute->nextRoute)
+		if (nextTarget != object->getNode()) 
 		{
-			auto nextTarget = lastRoute.nextRoute->nextRoute;
+			nextTarget->addObject(object);
+			if (lastRoute.nextRoute->nextRoute)
+			{
+				nextTarget = lastRoute.nextRoute->nextRoute->node;
+			}
+		}
+		else
+		{
+			nextTarget = lastRoute.nextRoute->node;
 		}
 	}
 
-	if (currentNode == nextTarget)
-	{
-		return;
-	}
+	auto by = (int)(ceil(object->getSpeed() * deltaTime));
 
-	auto moveBy = (int)(ceil(50 * deltaTime));
-
-
-	if (object->getX() != nextTarget->getX())
-	{
-		auto currentX = object->getX();
-		auto targetX = nextTarget->getX();
-		auto x = (targetX < currentX ? ((currentX - moveBy) < targetX ? targetX : currentX - moveBy) : ((currentX + moveBy) > targetX ? targetX : currentX + moveBy));
-		object->setX(x);
-	}
-	if (object->getY() != nextTarget->getY())
-	{
-		auto currentY = object->getY();
-		auto targetY = nextTarget->getY();
-		auto y = (targetY < currentY ? ((currentY - moveBy) < targetY ? targetY : currentY - moveBy) : ((currentY + moveBy) > targetY ? targetY : currentY + moveBy));
-		object->setY(y);
-	}
+	moveTo(object, nextTarget, by);
 }
 
 void GhostChasingState::check()

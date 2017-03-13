@@ -2,6 +2,7 @@
 #include <thread>         // std::thread
 #include <chrono>
 #include <iostream>
+#include "BasicTimer.h"
 
 void MainController::start()
 {
@@ -21,7 +22,12 @@ void MainController::start()
 void MainController::play()
 {
 	game.start();
-
+	
+	std::thread mainTimer([]() {
+		mainTimer.start(1);
+	});
+	
+	
 	using clock = std::chrono::high_resolution_clock;
 	auto lastTime = clock::now();
 	auto currentTime = lastTime;
@@ -40,6 +46,8 @@ void MainController::play()
 	{
 		cout << e.what() << '\n';
 	}
+
+	mainTimer.join();
 }
 
 void MainController::draw()

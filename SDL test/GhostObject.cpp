@@ -11,7 +11,7 @@ void GhostObject::update(double deltaTime)
 
 	if (!currentState)
 	{
-		currentState = std::make_unique<GhostWanderingState>(this->shared_from_this());
+		setState(std::make_shared<GhostWanderingState>(shared_from_this(), getWanderingTime()));
 	}
 
 	currentState->check();

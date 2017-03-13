@@ -18,9 +18,9 @@ std::shared_ptr<GraphNode> GamePlayObject::getNode()
 	return currentNode;
 }
 
-void GamePlayObject::setState(std::unique_ptr<BaseState> state)
+void GamePlayObject::setState(std::shared_ptr<BaseState> state)
 {
-	currentState = move(state);
+	currentState = state;
 }
 
 void GamePlayObject::setHealth(int health)
@@ -64,6 +64,26 @@ void GamePlayObject::useItems()
 			currentNode->removeItem(item);
 		}
 	}
+}
+
+int GamePlayObject::getWanderingTime()
+{
+	return wanderingTime;
+}
+
+int GamePlayObject::getSpeed()
+{
+	return speed;
+}
+
+void GamePlayObject::setSpeed(int speed)
+{
+	this->speed = speed;
+}
+
+int GamePlayObject::getSpeedMultiplier()
+{
+	return speedmultiplier;
 }
 
 std::shared_ptr<GamePlayObject> GamePlayObject::getTarget()

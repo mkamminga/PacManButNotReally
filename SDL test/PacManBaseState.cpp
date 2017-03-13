@@ -17,22 +17,9 @@ void PacManBaseState::update(double deltaTime)
 		calcNextTaget();
 	}
 
-	auto moveBy = (int)(ceil(50 * deltaTime));
+	auto by = (int)(ceil(object->getSpeed() * deltaTime));
 
-	if (object->getX() != nextTarget->getX())
-	{
-		auto currentX = object->getX();
-		auto targetX = nextTarget->getX();
-		auto x = (targetX < currentX ? ((currentX - moveBy) < targetX ? targetX : currentX - moveBy) : ((currentX + moveBy) > targetX ? targetX : currentX + moveBy));
-		object->setX(x);
-	}
-	if (object->getY() != nextTarget->getY())
-	{
-		auto currentY = object->getY();
-		auto targetY = nextTarget->getY();
-		auto y = (targetY < currentY ? ((currentY - moveBy) < targetY ? targetY : currentY - moveBy) : ((currentY + moveBy) > targetY ? targetY : currentY + moveBy));
-		object->setY(y);
-	}
+	moveTo(object, nextTarget, by);
 }
 
 void PacManBaseState::check()

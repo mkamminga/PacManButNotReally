@@ -80,13 +80,13 @@ void Game::start()
 	vertex245->addItem(std::make_shared<PillItem>());
 	vertex246->addItem(std::make_shared<PillItem>());
 	//pacman
-	auto packman = std::make_shared<PacManObject>();
+	auto packman = std::make_shared<PacManObject>(50);
 	vertex250->addObject(packman);
 
-	auto ghost1 = std::make_shared<GhostObject>(packman);
-	auto ghost2 = std::make_shared<GhostObject>(packman);
-	auto ghost3 = std::make_shared<GhostObject>(packman);
-	auto ghost4 = std::make_shared<GhostObject>(packman);
+	auto ghost1 = std::make_shared<GhostObject>(packman, 60, 2, 8);
+	auto ghost2 = std::make_shared<GhostObject>(packman, 60, 2, 8);
+	auto ghost3 = std::make_shared<GhostObject>(packman, 60, 2, 8);
+	auto ghost4 = std::make_shared<GhostObject>(packman, 60, 2, 8);
 	vertex103->addObject(ghost1);
 	vertex114->addObject(ghost2);
 	vertex157->addObject(ghost3);
