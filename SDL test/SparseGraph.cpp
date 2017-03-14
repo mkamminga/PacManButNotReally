@@ -1,5 +1,6 @@
 #include "SparseGraph.h"
 #include <queue>
+#include "Item.h"
 
 void SparseGraph::addNode(std::shared_ptr<GraphNode> node) {
 	nodes.push_back(node);
@@ -9,6 +10,16 @@ const vector<std::shared_ptr<GraphNode>>& SparseGraph::getNodes() const {
 	return nodes;
 }
 
+void SparseGraph::addItem(std::shared_ptr<Item> item)
+{
+	items.push_back(item);
+}
+
+const vector<std::shared_ptr<Item>>& SparseGraph::getItems() const
+{
+	return items;
+}
+
 void SparseGraph::shortestPathTo(ShortestRoute& lastShortestRoute, std::shared_ptr<GraphNode> start, std::shared_ptr<GraphNode> goal)
 {
 	if (!lastShortestRoute.initialized || lastShortestRoute.start != start || lastShortestRoute.goal != goal)
@@ -16,9 +27,9 @@ void SparseGraph::shortestPathTo(ShortestRoute& lastShortestRoute, std::shared_p
 		//reset
 		lastShortestRoute.start = start;
 		lastShortestRoute.goal = goal;
-		lastShortestRoute.nextRoute = nullptr;
+		lastShortestRoute.resetRoute();
 		//(re)calculate
-		lastShortestRoute.nextRoute = search(start, goal);
+		search(start, goal, lastShortestRoute.route);
 
 		if (!lastShortestRoute.initialized)
 		{
@@ -32,7 +43,7 @@ const double SparseGraph::calcDistance(const std::shared_ptr<GraphNode> from, co
 	return abs(from->getY() - to->getY()) + abs(from->getX() - to->getX());
 }
 
-std::shared_ptr<Route> SparseGraph::search(std::shared_ptr<GraphNode> start, std::shared_ptr<GraphNode> goal)
+void SparseGraph::search(std::shared_ptr<GraphNode> start, std::shared_ptr<GraphNode> goal, std::vector<std::shared_ptr<GraphNode>>& route)
 {
 	std::unordered_map<std::shared_ptr<GraphNode>, std::shared_ptr<GraphNode>> came_from; 
 	std::unordered_map<std::shared_ptr<GraphNode>, double> cost_so_far;
@@ -75,21 +86,22 @@ std::shared_ptr<Route> SparseGraph::search(std::shared_ptr<GraphNode> start, std
 
 	if (found)
 	{
-		std::shared_ptr<Route> route = std::make_shared<Route>();
-		route->node = goal;
-
 		std::shared_ptr<GraphNode> currentNode = came_from[goal];
+
+		if (!currentNode)
+		{
+			return;
+		}
 		while (currentNode != start)
 		{
-			auto lastRoute = route;
-			route = std::make_shared<Route>();
-			route->node = currentNode;
-			route->nextRoute = lastRoute;
+			route.push_back(currentNode);
+
 			currentNode = came_from[currentNode];
 		}
 
-		return route;
+		if (route.size() > 20)
+		{
+			auto a = "";
+		}
 	}
-
-	return nullptr;
 }

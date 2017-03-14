@@ -11,7 +11,7 @@ protected:
 public:
 	Item() : BaseObject(0,0) {}
 	virtual void setNode(std::shared_ptr<GraphNode> node);
-	std::shared_ptr<GraphNode> getNode();
+	const std::shared_ptr<GraphNode> getNode() const;
 	virtual void execute(std::shared_ptr<GamePlayObject>) = 0;
 };
 

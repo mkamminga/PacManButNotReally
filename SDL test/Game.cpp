@@ -4,6 +4,9 @@
 #include "PillItem.h"
 #include "PacManObject.h"
 #include "GhostObject.h"
+#include "GhostManager.h"
+#include <algorithm>    // std::copy
+#include <iterator>
 
 void Game::start()
 {
@@ -75,23 +78,30 @@ void Game::start()
 	auto vertex162 = std::make_shared<GraphNode>(541, 568, graph); // Spawn spookje
 	auto vertex250 = std::make_shared<GraphNode>(290, 345, graph); // Spawn pacman
 
-	vertex243->addItem(std::make_shared<PillItem>());
-	vertex244->addItem(std::make_shared<PillItem>());
-	vertex245->addItem(std::make_shared<PillItem>());
-	vertex246->addItem(std::make_shared<PillItem>());
+	auto pill1 = std::make_shared<PillItem>();
+	auto pill2 = std::make_shared<PillItem>();
+	auto pill3 = std::make_shared<PillItem>();
+	auto pill4 = std::make_shared<PillItem>();
+
+	vertex243->addItem(pill1);
+	vertex244->addItem(pill2);
+	vertex245->addItem(pill3);
+	vertex246->addItem(pill4);
+
+	graph->addItem(pill1);
+	graph->addItem(pill2);
+	graph->addItem(pill3);
+	graph->addItem(pill4);
 	//pacman
 	auto packman = std::make_shared<PacManObject>(50);
 	vertex250->addObject(packman);
 
-	auto ghost1 = std::make_shared<GhostObject>(packman, 60, 2, 8);
-	auto ghost2 = std::make_shared<GhostObject>(packman, 60, 2, 8);
-	auto ghost3 = std::make_shared<GhostObject>(packman, 60, 2, 8);
-	auto ghost4 = std::make_shared<GhostObject>(packman, 60, 2, 8);
-	vertex103->addObject(ghost1);
-	vertex114->addObject(ghost2);
-	vertex157->addObject(ghost3);
-	vertex162->addObject(ghost4);
+	ghostManager->addSpawningGround(vertex103);
+	ghostManager->addSpawningGround(vertex114);
+	ghostManager->addSpawningGround(vertex157);
+	ghostManager->addSpawningGround(vertex162);
 
+	ghostManager->spawn(packman);
 	
 	graph->addNode( vertex104 );
 	graph->addNode( vertex105 );
@@ -249,11 +259,6 @@ void Game::start()
 	vertex245->addEdges(vertex137,0);
 
 
-	/*eithNode->addItem(std::make_shared<PillItem>()); // pills
-	
-	secondNode->addObject(cow); // set objects to node
-	fifthNode->addObject(hare);*/
-
 	auto nodes = graph->getNodes();
 	for (auto node : nodes)
 	{
@@ -261,10 +266,8 @@ void Game::start()
 	}
 
 	updateableGamePlayObjects.push_back(packman);
-	updateableGamePlayObjects.push_back(ghost1);
-	updateableGamePlayObjects.push_back(ghost2);
-	updateableGamePlayObjects.push_back(ghost3);
-	updateableGamePlayObjects.push_back(ghost4);
+	auto ghosts = ghostManager->getSpawnedGhosts();
+	std::copy(ghosts.begin(), ghosts.end(), std::back_inserter(updateableGamePlayObjects));
 }
 
 std::shared_ptr<SparseGraph> Game::getGraph()

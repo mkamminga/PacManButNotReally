@@ -123,6 +123,12 @@
     <ClCompile Include="BaseState.cpp">
       <Filter>Source Files\Models\Objects\States</Filter>
     </ClCompile>
+    <ClCompile Include="GhostManager.cpp">
+      <Filter>Source Files\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="GhostBaseState.cpp">
+      <Filter>Source Files\Models\Objects\States</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainVisitor.h">
@@ -195,6 +201,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GhostChasingPillState.h">
+      <Filter>Header Files\Models\Objects\GamePlay\States</Filter>
+    </ClInclude>
+    <ClInclude Include="GhostManager.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="GhostBaseState.h">
       <Filter>Header Files\Models\Objects\GamePlay\States</Filter>
     </ClInclude>
   </ItemGroup>

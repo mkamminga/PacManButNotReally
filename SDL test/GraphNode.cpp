@@ -40,6 +40,7 @@ void GraphNode::removeObject(std::shared_ptr<GamePlayObject> toMatch)
 void GraphNode::addItem(std::shared_ptr<Item> item)
 {
 	items.push_back(item);
+	item->setNode(shared_from_this());
 	item->setX(x);
 	item->setY(y);
 }

@@ -23,6 +23,7 @@ void BaseState::moveTo(std::shared_ptr<GamePlayObject> objectToUpdate, std::shar
 		auto x = moveBy(currentX, targetX, by);
 		objectToUpdate->setX(x);
 	}
+
 	if (objectToUpdate->getY() != target->getY())
 	{
 		auto currentY = object->getY();

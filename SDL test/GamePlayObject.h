@@ -27,7 +27,7 @@ public:
 	virtual void setNode(std::shared_ptr<GraphNode> node);
 	std::shared_ptr<GraphNode> getNode();
 	virtual void update(double deltaTime) = 0;
-	void setState(std::shared_ptr<BaseState> state);
+	virtual void setState(std::shared_ptr<BaseState> state);
 	void setHealth(int health);
 	int getHealth();
 	void setAlertness(int alertness);

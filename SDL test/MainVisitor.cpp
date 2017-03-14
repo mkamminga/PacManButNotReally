@@ -8,6 +8,7 @@
 #include "PacManObject.h"
 #include "GhostWanderingState.h"
 #include "GhostChasingState.h"
+#include "GhostChasingPillState.h"
 
 void MainVisitor::setRenderer(SDL_Renderer * renderer)
 {
@@ -16,7 +17,7 @@ void MainVisitor::setRenderer(SDL_Renderer * renderer)
 	textures["pacman"]						= IMG_LoadTexture(renderer, "images/xid-2600194_1.png"); 
 	textures["ghost_wandering"]				= IMG_LoadTexture(renderer, "images/xid-2600193_1.png");
 	textures["ghost_chasing"]				= IMG_LoadTexture(renderer, "images/xid-2600191_1.png");
-	textures["ghost"]						= IMG_LoadTexture(renderer, "images/xid-2600193_1.png");
+	textures["ghost_pillhunting"]			= IMG_LoadTexture(renderer, "images/xid-2600192_1.png");
 	textures["pill"]						= IMG_LoadTexture(renderer, "images/pill.png");
 }
 
@@ -88,10 +89,6 @@ void MainVisitor::visit(PillItem * pill)
 
 void MainVisitor::visit(GhostObject * ghost)
 {
-	position.w = 35;
-	position.h = 35;
-
-	drawObjectTexture(ghost, textures["ghost"], &position);
 }
 
 void MainVisitor::visit(PacManObject * pacman)
@@ -116,6 +113,14 @@ void MainVisitor::visit(GhostChasingState * ghostChasing, BaseObject * bo)
 	position.h = 35;
 
 	drawObjectTexture(bo, textures["ghost_chasing"], &position);
+}
+
+void MainVisitor::visit(GhostChasingPillState * ghostWandering, BaseObject * bo)
+{
+	position.w = 35;
+	position.h = 35;
+
+	drawObjectTexture(bo, textures["ghost_pillhunting"], &position);
 }
 
 

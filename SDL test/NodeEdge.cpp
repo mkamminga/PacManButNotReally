@@ -13,5 +13,5 @@ const std::shared_ptr<GraphNode> GraphEdge::getTo() const
 
 const double GraphEdge::getCost() const
 {
-	return m_dCost;
+	return m_dCost + abs(from->getY() - to->getY()) + abs(from->getX() - to->getX());
 }
