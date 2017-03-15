@@ -28,7 +28,7 @@ public:
 	virtual void visit(GhostWanderingState* ghostWandering, BaseObject* bo);
 	virtual void visit(GhostChasingState* ghostWandering, BaseObject* bo);
 	virtual void visit(GhostChasingPillState* ghostWandering, BaseObject* bo);
-	
+	virtual void visit(GhostFlockingState* ghostWandering, BaseObject* bo);
 	void drawObjectTexture(BaseObject* object, SDL_Texture * texture, SDL_Rect* position);
 
 	~MainVisitor()

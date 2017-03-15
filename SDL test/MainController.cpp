@@ -49,7 +49,7 @@ void MainController::play()
 			update(1.00 / 600.00 * deltaTime);
 			draw();
 			lastTime = currentTime;
-			//std::this_thread::sleep_for(std::chrono::milliseconds(60));
+			std::this_thread::sleep_for(std::chrono::milliseconds(20));
 		}
 	}
 	catch (exception& e)

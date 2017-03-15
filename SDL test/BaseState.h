@@ -16,4 +16,5 @@ public:
 protected:
 	int moveBy(int from, int to, int by);
 	void moveTo(std::shared_ptr<GamePlayObject> objectToUpdate, std::shared_ptr<GraphNode> target, int by);
+	void moveTo(std::shared_ptr<GamePlayObject> objectToUpdate, std::shared_ptr<GamePlayObject> objectToMoveTo, int by);
 };

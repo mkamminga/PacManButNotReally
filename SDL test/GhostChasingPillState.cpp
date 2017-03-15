@@ -14,7 +14,9 @@ void GhostChasingPillState::update(double deltaTime)
 		auto currentNode = object->getNode();
 		if (currentNode == target)
 		{
-			object->setState(std::make_shared<GhostWanderingState>(object, ghostManager)); // change to chasing
+			//multiply speed by the multiplier
+			object->setSpeed( object->getSpeed() * object->getSpeedMultiplier());
+			object->setState(std::make_shared<GhostChasingState>(object, ghostManager, nullptr)); // change to chasing
 		}
 		else
 		{
@@ -89,10 +91,6 @@ void GhostChasingPillState::check()
 				{
 					nextNode = nullptr;
 				}
-			}
-			else
-			{
-				auto a = "";
 			}
 		}
 	}

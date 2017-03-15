@@ -1,69 +1,66 @@
 #include "GhostChasingState.h"
+#include "GhostFlockingState.h"
 
 void GhostChasingState::update(double deltaTime)
 {
-	/*if (!lastRoute.initialized)
+	auto currentNode = object->getNode(); 
+	auto targetNode = object->getTarget()->getNode();
+	auto by = (int)(ceil(object->getSpeed() * deltaTime));
+
+	if (currentNode == targetNode) // on the same node as our target, pacman
 	{
-		check();
+		auto pacman = object->getTarget();
+		moveTo(object, pacman, by);
+
+		if (object->getX() == pacman->getX() && object->getY() == pacman->getY())
+		{
+			auto a = "";
+			object->setX(1100 - (object->getX() / 10));
+			object->setY(object->getY() -(object->getY() / 10));
+			//update pacman speed
+			//pacman->setSpeed(pacman->getSpeed());
+			object->setState(std::make_shared<GhostFlockingState>(object, ghostManager)); // change to chasing
+		}
 	}
-
-	try {
-
-		auto currentNode = object->getNode();
-
-		if (currentNode == lastRoute.goal)
+	else
+	{
+		if (nextNode->getX() == object->getX() && nextNode->getY() == object->getY())
 		{
-			return;
-		}
-
-		if (nextTarget != nextRoute->node && nextTarget != currentNode)
-		{
-			nextTarget = currentNode;
-		}
-
-
-		if (nextTarget->getX() == object->getX() && nextTarget->getY() == object->getY())
-		{
-			if (nextTarget != object->getNode())
+			if (nextNode != object->getNode())
 			{
-				nextTarget->addObject(object);
-				if (lastRoute.nextRoute->nextRoute)
-				{
-					nextRoute = nextRoute->nextRoute;
-				}
+				nextNode->addObject(object);
 			}
-
-			nextTarget = nextRoute->node;
+			auto nextTarget = lastRoute.getNextNode();
+			if (nextTarget) {
+				nextNode = nextTarget;
+			}
 		}
 
-		auto by = (int)(ceil(object->getSpeed() * deltaTime));
-
-		moveTo(object, nextTarget, by);
+		
+		moveTo(object, nextNode, by);
 	}
-	catch (std::exception& e)
-	{
-		auto a = e.what();
-	}
-	catch (...)
-	{
-		auto a = "";
-	}*/
 }
 
 void GhostChasingState::check()
 {
-	/*auto currentNode = object->getNode();
-	auto targetNode = object->getTarget()->getNode();
-	if (currentNode != targetNode)
-	{
-		currentNode->getGraph()->shortestPathTo(lastRoute, currentNode, targetNode);
-		nextRoute = lastRoute.nextRoute;
+	auto currentNode = object->getNode();
+	auto currentTargetNode = object->getTarget()->getNode();
 
-		if (!nextTarget)
+	if (!lastRoute.initialized || (targetNode != currentTargetNode && nextNode && nextNode == currentNode))
+	{
+		currentNode->getGraph()->shortestPathTo(lastRoute, currentNode, currentTargetNode);
+		if (lastTarget != lastRoute.currentRoute->node)
 		{
-			nextTarget = nextRoute->node;
+			nextNode = currentNode;
+			lastTarget = nullptr;
 		}
-	}*/
+		else
+		{
+			nextNode = lastRoute.getNextNode();
+		}
+
+		targetNode = currentTargetNode;
+	}
 }
 
 void GhostChasingState::accept(BaseVisitor * bv, BaseObject * bo)

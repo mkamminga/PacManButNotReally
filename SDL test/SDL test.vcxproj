@@ -161,6 +161,7 @@
     <ClCompile Include="GhostBaseState.cpp" />
     <ClCompile Include="GhostChasingPillState.cpp" />
     <ClCompile Include="GhostChasingState.cpp" />
+    <ClCompile Include="GhostFlockingState.cpp" />
     <ClCompile Include="GhostManager.cpp" />
     <ClCompile Include="GhostObject.cpp" />
     <ClCompile Include="GhostWanderingState.cpp" />
@@ -190,6 +191,7 @@
     <ClInclude Include="GhostBaseState.h" />
     <ClInclude Include="GhostChasingPillState.h" />
     <ClInclude Include="GhostChasingState.h" />
+    <ClInclude Include="GhostFlockingState.h" />
     <ClInclude Include="GhostManager.h" />
     <ClInclude Include="GhostObject.h" />
     <ClInclude Include="GhostWanderingState.h" />

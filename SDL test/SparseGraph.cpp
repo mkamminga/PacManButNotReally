@@ -103,17 +103,19 @@ std::shared_ptr<Route> SparseGraph::search(std::shared_ptr<GraphNode> start, std
 		std::shared_ptr<GraphNode> currentNode = came_from[goal];
 		auto path = std::make_shared<Route>();
 		path->node = goal;
-
-		while (currentNode != start)
+		if (goal != start)
 		{
-			//route.push_back(currentNode);
-			auto newPath			= std::make_shared<Route>();
-			newPath->nextRoute		= path;
-			newPath->node			= currentNode;
+			while (currentNode != start)
+			{
+				//route.push_back(currentNode);
+				auto newPath = std::make_shared<Route>();
+				newPath->nextRoute = path;
+				newPath->node = currentNode;
 
-			path = newPath;
+				path = newPath;
 
-			currentNode				= came_from[currentNode];
+				currentNode = came_from[currentNode];
+			}
 		}
 
 		return path;

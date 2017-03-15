@@ -8,6 +8,7 @@ class PacManObject;
 class GhostWanderingState;
 class GhostChasingState;
 class GhostChasingPillState;
+class GhostFlockingState;
 class BaseObject;
 
 class BaseVisitor
@@ -20,5 +21,5 @@ public:
 	virtual void visit(GhostWanderingState* ghostWandering, BaseObject* bo) = 0;
 	virtual void visit(GhostChasingState* ghostWandering, BaseObject* bo) = 0;
 	virtual void visit(GhostChasingPillState* ghostWandering, BaseObject* bo) = 0;
-	
+	virtual void visit(GhostFlockingState* ghostFlocking, BaseObject* bo) = 0;
 };

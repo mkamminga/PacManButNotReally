@@ -18,6 +18,7 @@ void MainVisitor::setRenderer(SDL_Renderer * renderer)
 	textures["ghost_wandering"]				= IMG_LoadTexture(renderer, "images/xid-2600193_1.png");
 	textures["ghost_chasing"]				= IMG_LoadTexture(renderer, "images/xid-2600191_1.png");
 	textures["ghost_pillhunting"]			= IMG_LoadTexture(renderer, "images/xid-2600192_1.png");
+	textures["ghost_afterlife"]				= IMG_LoadTexture(renderer, "images/xid-2600190_1.png");
 	textures["pill"]						= IMG_LoadTexture(renderer, "images/pill.png");
 }
 
@@ -121,6 +122,14 @@ void MainVisitor::visit(GhostChasingPillState * ghostWandering, BaseObject * bo)
 	position.h = 35;
 
 	drawObjectTexture(bo, textures["ghost_pillhunting"], &position);
+}
+
+void MainVisitor::visit(GhostFlockingState * ghostWandering, BaseObject * bo)
+{
+	position.w = 40;
+	position.h = 40;
+
+	drawObjectTexture(bo, textures["ghost_afterlife"], &position);
 }
 
 
