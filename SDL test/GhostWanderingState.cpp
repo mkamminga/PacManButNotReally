@@ -10,6 +10,29 @@ void GhostWanderingState::update(double deltaTime)
 	{
 		calcNextTaget();
 	}
+	else if (wanderingTime == 0)
+	{
+		mainTimer.unsubscribe(shared_from_this());
+
+		uniform_int_distribution<int> dist{ 1,  3 };
+		int num = dist(dre);
+		object->setState(std::make_shared<GhostChasingPillState>(object, ghostManager, nextTarget));
+		return;
+		/*
+		if (num == 1)
+		{
+		object->setState(std::make_shared<GhostChasingState>(object, ghostManager));
+		}
+		else if (num == 2)
+		{
+		object->setState(std::make_shared<GhostChasingPillState>(object, ghostManager));
+		}
+		else
+		{
+		registerd = false;
+		wanderingTime = object->getWanderingTime();
+		}*/
+	}
 	else if (nextTarget->getX() == object->getX() && nextTarget->getY() == object->getY())
 	{
 		nextTarget->addObject(object);
@@ -29,38 +52,6 @@ void GhostWanderingState::check()
 		auto shared = shared_from_this();
 		mainTimer.subscribe(shared);
 		registerd = true;
-	}
-
-	auto currentItems = object->getNode()->getItems();
-
-	try {
-		if (wanderingTime == 0)
-		{
-			mainTimer.unsubscribe(shared_from_this());
-
-			uniform_int_distribution<int> dist{ 1,  3 };
-			int num = dist(dre);
-
-			object->setState(std::make_shared<GhostChasingPillState>(object, ghostManager));
-			/*
-			if (num == 1)
-			{
-				object->setState(std::make_shared<GhostChasingState>(object, ghostManager));
-			}
-			else if (num == 2)
-			{
-				object->setState(std::make_shared<GhostChasingPillState>(object, ghostManager));
-			}
-			else
-			{
-				registerd = false;
-				wanderingTime = object->getWanderingTime();
-			}*/
-		}
-	}
-	catch (std::exception& e)
-	{
-		auto a = e.what();
 	}
 }
 

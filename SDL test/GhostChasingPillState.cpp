@@ -6,36 +6,33 @@ void GhostChasingPillState::update(double deltaTime)
 {
 	if (!target)
 	{
-		check();
-	}
-	if (!nextNode)
-	{
 		return;
 	}
 
 	try {
-		if (nextNode->getX() == object->getX() && nextNode->getY() == object->getY())
+		
+		auto currentNode = object->getNode();
+		if (currentNode == target)
 		{
-			if (nextNode != object->getNode())
+			object->setState(std::make_shared<GhostWanderingState>(object, ghostManager)); // change to chasing
+		}
+		else
+		{
+			if (nextNode->getX() == object->getX() && nextNode->getY() == object->getY())
 			{
-				nextNode->addObject(object);
-				auto nextTarget = lastRoute.getNextNode();
-
-				if (!nextTarget)
+				if (nextNode != object->getNode())
 				{
-					auto a = "";
-
-					return;
+					nextNode->addObject(object);
 				}
-				else
-				{
+				auto nextTarget = lastRoute.getNextNode();
+				if (nextTarget) {
 					nextNode = nextTarget;
 				}
 			}
-		}
 
-		auto by = (int)(ceil(object->getSpeed() * deltaTime));
-		moveTo(object, nextNode, by);
+			auto by = (int)(ceil(object->getSpeed() * deltaTime));
+			moveTo(object, nextNode, by);
+		}
 	}
 	catch (std::exception& e)
 	{
@@ -74,10 +71,24 @@ void GhostChasingPillState::check()
 
 			if (targetNode)
 			{
-				graph->shortestPathTo(lastRoute, currentNode, targetNode);
-
 				target = targetNode;
-				nextNode = lastRoute.getNextNode();
+				if (currentNode != targetNode)
+				{
+					graph->shortestPathTo(lastRoute, currentNode, targetNode);
+					if (oldTarget != lastRoute.currentRoute->node)
+					{
+						nextNode = currentNode;
+						oldTarget = nullptr;
+					}
+					else
+					{
+						nextNode = lastRoute.getNextNode();
+					}
+				}
+				else
+				{
+					nextNode = nullptr;
+				}
 			}
 			else
 			{
@@ -85,10 +96,7 @@ void GhostChasingPillState::check()
 			}
 		}
 	}
-	if (currentNode == target)
-	{
-		object->setState(std::make_shared<GhostWanderingState>(object, ghostManager, object->getWanderingTime())); // change to chasing
-	}
+
 }
 
 void GhostChasingPillState::accept(BaseVisitor * bv, BaseObject * bo)

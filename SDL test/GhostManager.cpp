@@ -19,10 +19,10 @@ void GhostManager::spawn(std::shared_ptr<GamePlayObject> target)
 
 	for (auto node : spawningGrounds)
 	{
-		for (int i = 0; i < 25; i++)
+		for (int i = 0; i < 4; i++)
 		{
-			auto ghost = std::make_shared<GhostObject>(target, 60, speedMultiplierDist(dre), wanderingTimeDist(dre));
-			ghost->setState(std::make_shared<GhostChasingPillState>(ghost, shared_from_this()));
+			auto ghost = std::make_shared<GhostObject>(target, 40, speedMultiplierDist(dre), wanderingTimeDist(dre));
+			ghost->setState(std::make_shared<GhostWanderingState>(ghost, shared_from_this()));
 			node->addObject(ghost);
 			ghosts.push_back(ghost);
 		}

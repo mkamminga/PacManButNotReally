@@ -15,7 +15,10 @@ private:
 	std::shared_ptr<GraphNode> lastVisited[2];
 	std::shared_ptr<GraphNode> nextTarget = nullptr;
 public:
-	GhostWanderingState(std::shared_ptr<GamePlayObject> object, std::shared_ptr<GhostManager> ghostManager,  int wanderingTime) : wanderingTime(wanderingTime), GhostBaseState(object, ghostManager) {}
+	GhostWanderingState(std::shared_ptr<GamePlayObject> object, std::shared_ptr<GhostManager> ghostManager) : GhostBaseState(object, ghostManager) 
+	{
+		this->wanderingTime = object->getWanderingTime();
+	}
 	virtual void check();
 	virtual void update(double deltaTime);
 	virtual void accept(BaseVisitor* bv, BaseObject* bo);

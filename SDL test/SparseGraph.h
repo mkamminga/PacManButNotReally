@@ -18,30 +18,19 @@ struct ShortestRoute
 	std::shared_ptr<GraphNode> goal = nullptr;
 	int index = 0;
 	std::shared_ptr<Route> currentRoute = nullptr;
-	std::vector<std::shared_ptr<GraphNode>> route;
 
 	void resetRoute()
 	{
-		route.clear();
-		
-		index = 0;
+		currentRoute = nullptr;
 	}
 
 	std::shared_ptr<GraphNode> getNextNode()
 	{
-		auto size =  route.size();
-		if (index < size)
+		if (currentRoute)
 		{
-			auto it = route.rbegin() + index;
-			auto node = it.operator*();
-
-			index++;
-
+			auto node = currentRoute->node;
+			currentRoute = currentRoute->nextRoute;
 			return node;
-		}
-		else if (index == size)
-		{
-			return goal;
 		}
 		else
 		{
@@ -54,15 +43,18 @@ struct ShortestRoute
 class SparseGraph
 {
 private:
-	vector<std::shared_ptr<GraphNode>> nodes;
-	vector<std::shared_ptr<Item>> items;
+	std::vector<std::shared_ptr<GraphNode>> nodes;
+	std::vector<std::shared_ptr<Item>> items;
+	std::map< std::pair< std::shared_ptr<GraphNode>, std::shared_ptr<GraphNode> >, std::shared_ptr<Route>> cachedRoutes;
+	int cachedRouteLimit = 200;
+	int cachedRouteIndex = 0;
 public:
 	void addNode(std::shared_ptr<GraphNode>);
 	const vector<std::shared_ptr<GraphNode>>& getNodes() const;
 	void addItem(std::shared_ptr<Item>);
 	const vector<std::shared_ptr<Item>>& getItems() const;
 	void shortestPathTo(ShortestRoute& lastShortestRoute, std::shared_ptr<GraphNode> start, std::shared_ptr<GraphNode> goal);
-	void search(std::shared_ptr<GraphNode> start, std::shared_ptr<GraphNode> goal, std::vector<std::shared_ptr<GraphNode>>& route);
+	std::shared_ptr<Route> search(std::shared_ptr<GraphNode> start, std::shared_ptr<GraphNode> goal);
 	const double calcDistance(const std::shared_ptr<GraphNode>, const std::shared_ptr<GraphNode>) const;
 };
 

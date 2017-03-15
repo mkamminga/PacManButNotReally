@@ -31,15 +31,25 @@ void MainController::play()
 	using clock = std::chrono::high_resolution_clock;
 	auto lastTime = clock::now();
 	auto currentTime = lastTime;
+	Uint64 NOW = SDL_GetPerformanceCounter();
+	Uint64 LAST = 0;
+	double deltaTime = 0;
+
 	try {
 		while (!done) {
-			currentTime = clock::now();
+			/*currentTime = clock::now();
 			long diff = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastTime).count();
-			auto d = (double)(1 / 600.0 * diff);
-			update(d);
+			auto d = (double)(1 / 6000.0 * diff);*/
+
+			LAST = NOW;
+			NOW = SDL_GetPerformanceCounter();
+
+			deltaTime = (double)((NOW - LAST) * 1000 / SDL_GetPerformanceFrequency());
+
+			update(1.00 / 600.00 * deltaTime);
 			draw();
 			lastTime = currentTime;
-			std::this_thread::sleep_for(std::chrono::milliseconds(20));
+			//std::this_thread::sleep_for(std::chrono::milliseconds(60));
 		}
 	}
 	catch (exception& e)

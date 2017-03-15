@@ -15,7 +15,10 @@ int BaseState::moveBy(int from, int to, int by)
 
 void BaseState::moveTo(std::shared_ptr<GamePlayObject> objectToUpdate, std::shared_ptr<GraphNode> target, int by)
 {
-
+	if (!target)
+	{
+		auto a = "";
+	}
 	if (objectToUpdate->getX() != target->getX())
 	{
 		auto currentX = object->getX();

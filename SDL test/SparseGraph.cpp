@@ -27,9 +27,23 @@ void SparseGraph::shortestPathTo(ShortestRoute& lastShortestRoute, std::shared_p
 		//reset
 		lastShortestRoute.start = start;
 		lastShortestRoute.goal = goal;
+
 		lastShortestRoute.resetRoute();
-		//(re)calculate
-		search(start, goal, lastShortestRoute.route);
+		if (cachedRoutes.find(make_pair(start, goal)) == cachedRoutes.end())
+		{
+			if (cachedRoutes.size() >= cachedRouteLimit)
+			{
+				cachedRoutes.erase(cachedRoutes.begin()); // remove oldest cached route
+			}
+			//(re)calculate
+			lastShortestRoute.currentRoute = search(start, goal);
+
+			cachedRoutes[make_pair(start, goal)] = lastShortestRoute.currentRoute;
+		}
+		else
+		{
+			lastShortestRoute.currentRoute = cachedRoutes[make_pair(start, goal)];
+		}
 
 		if (!lastShortestRoute.initialized)
 		{
@@ -43,7 +57,7 @@ const double SparseGraph::calcDistance(const std::shared_ptr<GraphNode> from, co
 	return abs(from->getY() - to->getY()) + abs(from->getX() - to->getX());
 }
 
-void SparseGraph::search(std::shared_ptr<GraphNode> start, std::shared_ptr<GraphNode> goal, std::vector<std::shared_ptr<GraphNode>>& route)
+std::shared_ptr<Route> SparseGraph::search(std::shared_ptr<GraphNode> start, std::shared_ptr<GraphNode> goal)
 {
 	std::unordered_map<std::shared_ptr<GraphNode>, std::shared_ptr<GraphNode>> came_from; 
 	std::unordered_map<std::shared_ptr<GraphNode>, double> cost_so_far;
@@ -87,21 +101,23 @@ void SparseGraph::search(std::shared_ptr<GraphNode> start, std::shared_ptr<Graph
 	if (found)
 	{
 		std::shared_ptr<GraphNode> currentNode = came_from[goal];
+		auto path = std::make_shared<Route>();
+		path->node = goal;
 
-		if (!currentNode)
-		{
-			return;
-		}
 		while (currentNode != start)
 		{
-			route.push_back(currentNode);
+			//route.push_back(currentNode);
+			auto newPath			= std::make_shared<Route>();
+			newPath->nextRoute		= path;
+			newPath->node			= currentNode;
 
-			currentNode = came_from[currentNode];
+			path = newPath;
+
+			currentNode				= came_from[currentNode];
 		}
 
-		if (route.size() > 20)
-		{
-			auto a = "";
-		}
+		return path;
 	}
+
+	return nullptr;
 }
