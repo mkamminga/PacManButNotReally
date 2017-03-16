@@ -27,6 +27,18 @@ void PacManBaseState::check()
 	//nothing to check, will not change state
 }
 
+void PacManBaseState::updateAvgCatchTime()
+{
+	int health		= object->getHealth();
+	int speed		= object->getSpeed();
+
+	if (health > 1 && speed > 1)
+	{
+		object->setSpeed(speed -1);
+	}
+	
+}
+
 void PacManBaseState::calcNextTaget()
 {
 	auto node = object->getNode();

@@ -4,7 +4,7 @@
 
 void PillItem::execute(std::shared_ptr<GamePlayObject> object)
 {
-	object->setAlertness(100);
+	
 }
 
 void PillItem::accept(BaseVisitor * bv)

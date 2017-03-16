@@ -9,10 +9,9 @@ class GamePlayObject :
 protected:
 	std::shared_ptr<GraphNode> currentNode = nullptr;
 	std::shared_ptr<BaseState> currentState = nullptr;
+	std::shared_ptr<BaseState> firstState = nullptr;
 	std::shared_ptr<GamePlayObject> target;
 	int health = 100;
-	int alertness = 50;
-	int attack = 40;
 	int speed;
 	int speedmultiplier;
 	int wanderingTime;
@@ -24,21 +23,19 @@ public:
 		speedmultiplier(speedmultiplier),
 		wanderingTime(wanderingTime),
 		BaseObject(x, y) {}
+
 	virtual void setNode(std::shared_ptr<GraphNode> node);
 	std::shared_ptr<GraphNode> getNode();
 	virtual void update(double deltaTime) = 0;
 	virtual void setState(std::shared_ptr<BaseState> state);
+	std::shared_ptr<BaseState> getFirstState();
+	std::shared_ptr<BaseState> getState();
 	void setHealth(int health);
 	int getHealth();
-	void setAlertness(int alertness);
-	int getAlertness();
-	void setAttack(int attack);
-	int getAttack();
 	void useItems();
 	int getWanderingTime();
 	int getSpeed();
 	void setSpeed(int speed);
 	int getSpeedMultiplier();
 	std::shared_ptr<GamePlayObject> getTarget();
-	~GamePlayObject() {}
 };

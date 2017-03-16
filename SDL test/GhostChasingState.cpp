@@ -1,5 +1,6 @@
 #include "GhostChasingState.h"
 #include "GhostFlockingState.h"
+#include "GhostManager.h"
 
 void GhostChasingState::update(double deltaTime)
 {
@@ -14,12 +15,17 @@ void GhostChasingState::update(double deltaTime)
 
 		if (object->getX() == pacman->getX() && object->getY() == pacman->getY())
 		{
-			auto a = "";
 			object->setX(1100 - (object->getX() / 10));
 			object->setY(object->getY() -(object->getY() / 10));
 			//update pacman speed
 			//pacman->setSpeed(pacman->getSpeed());
 			object->setState(std::make_shared<GhostFlockingState>(object, ghostManager)); // change to chasing
+			object->getFirstState()->updateAvgCatchTime();
+			object->getState()->updateAvgCatchTime();
+		}
+		else
+		{
+			nextNode = object->getTarget()->getState()->getNextTarget();
 		}
 	}
 	else
@@ -46,9 +52,9 @@ void GhostChasingState::check()
 	auto currentNode = object->getNode();
 	auto currentTargetNode = object->getTarget()->getNode();
 
-	if (!lastRoute.initialized || (targetNode != currentTargetNode && nextNode && nextNode == currentNode))
+	if (!lastRoute.initialized || (targetNode != currentTargetNode && nextNode && currentNode == nextNode))
 	{
-		currentNode->getGraph()->shortestPathTo(lastRoute, currentNode, currentTargetNode);
+		currentNode->getGraph()->shortestPathTo(lastRoute, currentNode, object->getTarget()->getState()->getNextTarget());
 		if (lastTarget != lastRoute.currentRoute->node)
 		{
 			nextNode = currentNode;
@@ -61,6 +67,11 @@ void GhostChasingState::check()
 
 		targetNode = currentTargetNode;
 	}
+}
+
+void GhostChasingState::updateAvgCatchTime()
+{
+	ghostManager->updateAvgCatchTime(this);
 }
 
 void GhostChasingState::accept(BaseVisitor * bv, BaseObject * bo)

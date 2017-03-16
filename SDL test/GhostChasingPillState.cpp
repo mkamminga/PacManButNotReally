@@ -1,6 +1,7 @@
 #include "GhostChasingPillState.h"
 #include "GhostChasingState.h"
 #include "GhostWanderingState.h"
+#include "GhostManager.h"
 
 void GhostChasingPillState::update(double deltaTime)
 {
@@ -95,6 +96,11 @@ void GhostChasingPillState::check()
 		}
 	}
 
+}
+
+void GhostChasingPillState::updateAvgCatchTime()
+{
+	ghostManager->updateAvgCatchTime(this);
 }
 
 void GhostChasingPillState::accept(BaseVisitor * bv, BaseObject * bo)

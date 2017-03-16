@@ -23,6 +23,16 @@ void GamePlayObject::setState(std::shared_ptr<BaseState> state)
 	currentState = state;
 }
 
+std::shared_ptr<BaseState> GamePlayObject::getFirstState()
+{
+	return firstState;
+}
+
+std::shared_ptr<BaseState> GamePlayObject::getState()
+{
+	return currentState;
+}
+
 void GamePlayObject::setHealth(int health)
 {
 	this->health = health;
@@ -31,26 +41,6 @@ void GamePlayObject::setHealth(int health)
 int GamePlayObject::getHealth()
 {
 	return health;
-}
-
-void GamePlayObject::setAlertness(int alertness)
-{
-	this->alertness = alertness;
-}
-
-int GamePlayObject::getAlertness()
-{
-	return alertness;
-}
-
-void GamePlayObject::setAttack(int attack)
-{
-	this->attack = attack;
-}
-
-int GamePlayObject::getAttack()
-{
-	return attack;
 }
 
 void GamePlayObject::useItems()

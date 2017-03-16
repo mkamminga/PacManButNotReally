@@ -1,6 +1,16 @@
 #include "BaseState.h"
 #include "GraphNode.h"
 
+std::shared_ptr<GraphNode> BaseState::getNextTarget()
+{
+	return nextTarget;
+}
+
+std::shared_ptr<GamePlayObject> BaseState::getObject()
+{
+	return object;
+}
+
 int BaseState::moveBy(int from, int to, int by)
 {
 	if (to  < from)

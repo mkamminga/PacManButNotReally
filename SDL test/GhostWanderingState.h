@@ -13,7 +13,6 @@ private:
 	bool registerd = false;
 	int wanderingTime = 0;
 	std::shared_ptr<GraphNode> lastVisited[2];
-	std::shared_ptr<GraphNode> nextTarget = nullptr;
 public:
 	GhostWanderingState(std::shared_ptr<GamePlayObject> object, std::shared_ptr<GhostManager> ghostManager) : GhostBaseState(object, ghostManager) 
 	{
@@ -22,6 +21,6 @@ public:
 	virtual void check();
 	virtual void update(double deltaTime);
 	virtual void accept(BaseVisitor* bv, BaseObject* bo);
+	virtual void updateAvgCatchTime();
 	virtual void tick();
-	void calcNextTaget();
 };

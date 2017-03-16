@@ -2,10 +2,7 @@
 #include "Random.h"
 #include "GhostWanderingState.h"
 #include "GhostChasingPillState.h"
-
-GhostManager::GhostManager()
-{
-}
+#include "GhostChasingState.h"
 
 void GhostManager::addSpawningGround(std::shared_ptr<GraphNode> spawningGround)
 {
@@ -21,12 +18,46 @@ void GhostManager::spawn(std::shared_ptr<GamePlayObject> target)
 	{
 		for (int i = 0; i < 25; i++)
 		{
-			auto ghost = std::make_shared<GhostObject>(target, 70, speedMultiplierDist(dre), wanderingTimeDist(dre));
+			auto ghost = std::make_shared<GhostObject>(target, 65, speedMultiplierDist(dre), wanderingTimeDist(dre));
 			ghost->setState(std::make_shared<GhostWanderingState>(ghost, shared_from_this()));
 			node->addObject(ghost);
 			ghosts.push_back(ghost);
 		}
 	}
+}
+
+std::shared_ptr<GhostBaseState> GhostManager::getNextRandomState(std::shared_ptr<GamePlayObject> object, std::shared_ptr<GraphNode> target)
+{
+	uniform_int_distribution<int> dist{ 0,  totalNumberOfChanceDist };
+	int num = dist(dre);
+	int chancesFromRange = 0;
+	int chancesTillRange = 0;
+
+	for (auto item : chances)
+	{
+		chancesTillRange += item.second;
+
+		if (num >= chancesFromRange && num <= chancesTillRange)
+		{
+			std::string key = item.first;
+			if (key == "wandering")
+			{
+				return std::make_shared<GhostWanderingState>(object, shared_from_this());
+			}
+			else if (key == "finding_pill")
+			{
+				return std::make_shared<GhostChasingPillState>(object, shared_from_this(), target);
+			}
+			else if (key == "chasing_pacman")
+			{
+				return std::make_shared<GhostChasingState>(object, shared_from_this(), target);
+			}
+		}
+
+		chancesFromRange += item.second;
+	}
+
+	return nullptr;
 }
 
 std::vector<std::shared_ptr<GhostObject>> GhostManager::getSpawnedGhosts()
@@ -36,10 +67,17 @@ std::vector<std::shared_ptr<GhostObject>> GhostManager::getSpawnedGhosts()
 
 void GhostManager::tick()
 {
-	//TODO: update timer
+	time++;
 }
 
+void GhostManager::updateAvgCatchTime(GhostWanderingState *)
+{
+}
 
-GhostManager::~GhostManager()
+void GhostManager::updateAvgCatchTime(GhostChasingState *)
+{
+}
+
+void GhostManager::updateAvgCatchTime(GhostChasingPillState *)
 {
 }

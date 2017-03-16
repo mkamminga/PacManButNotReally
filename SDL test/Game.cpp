@@ -7,6 +7,7 @@
 #include "GhostManager.h"
 #include <algorithm>    // std::copy
 #include <iterator>
+#include "BasicTimer.h"
 
 void Game::start()
 {
@@ -268,6 +269,8 @@ void Game::start()
 	updateableGamePlayObjects.push_back(packman);
 	auto ghosts = ghostManager->getSpawnedGhosts();
 	std::copy(ghosts.begin(), ghosts.end(), std::back_inserter(updateableGamePlayObjects));
+
+	mainTimer.subscribe(ghostManager);
 }
 
 std::shared_ptr<SparseGraph> Game::getGraph()
