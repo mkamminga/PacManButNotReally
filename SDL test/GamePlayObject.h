@@ -28,7 +28,6 @@ public:
 	std::shared_ptr<GraphNode> getNode();
 	virtual void update(double deltaTime) = 0;
 	virtual void setState(std::shared_ptr<BaseState> state);
-	std::shared_ptr<BaseState> getFirstState();
 	std::shared_ptr<BaseState> getState();
 	void setHealth(int health);
 	int getHealth();

@@ -3,40 +3,29 @@
 #include "PillItem.h"
 #include "Random.h"
 #include "GamePlayObject.h"
+#include <iostream>
 
 void PacManBaseState::update(double deltaTime)
 {
-	if (!nextTarget)
+	auto by = (int)(ceil(object->getSpeed() * (object->getHealth() * 0.01) * deltaTime));
+
+	auto num = (double)object->getSpeed() * (object->getHealth() * 0.01);
+
+	while (by > 0)
 	{
-		calcNextTaget();
+		if (!nextTarget || object->getNode() == nextTarget)
+		{
+			nextTarget = nullptr;
+			calcNextTaget();
+		}
+	
+		moveTo(object, nextTarget, by); // by is updated to the remaining sum
 	}
-	else if (nextTarget->getX() == object->getX() && nextTarget->getY() == object->getY())
-	{	
-		nextTarget->addObject(object);
-		nextTarget = nullptr;
-		calcNextTaget();
-	}
-
-	auto by = (int)(ceil(object->getSpeed() * deltaTime));
-
-	moveTo(object, nextTarget, by);
 }
 
 void PacManBaseState::check()
 {
-	//nothing to check, will not change state
-}
-
-void PacManBaseState::updateAvgCatchTime()
-{
-	int health		= object->getHealth();
-	int speed		= object->getSpeed();
-
-	if (health > 1 && speed > 1)
-	{
-		object->setSpeed(speed -1);
-	}
-	
+	//nothing to check, will not change state, not ever
 }
 
 void PacManBaseState::calcNextTaget()

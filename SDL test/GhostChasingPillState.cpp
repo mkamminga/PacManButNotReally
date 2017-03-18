@@ -11,30 +11,30 @@ void GhostChasingPillState::update(double deltaTime)
 	}
 
 	try {
-		
-		auto currentNode = object->getNode();
-		if (currentNode == target)
-		{
-			//multiply speed by the multiplier
-			object->setSpeed( object->getSpeed() * object->getSpeedMultiplier());
-			object->setState(std::make_shared<GhostChasingState>(object, ghostManager, nullptr)); // change to chasing
-		}
-		else
-		{
-			if (nextNode->getX() == object->getX() && nextNode->getY() == object->getY())
-			{
-				if (nextNode != object->getNode())
-				{
-					nextNode->addObject(object);
-				}
-				auto nextTarget = lastRoute.getNextNode();
-				if (nextTarget) {
-					nextNode = nextTarget;
-				}
-			}
+		auto by = (int)(ceil(object->getSpeed() * deltaTime));
 
-			auto by = (int)(ceil(object->getSpeed() * deltaTime));
-			moveTo(object, nextNode, by);
+		while (by > 0)
+		{
+			auto currentNode = object->getNode();
+			if (currentNode == target)
+			{
+				//multiply speed by the multiplier
+				object->setSpeed(object->getSpeed() * object->getSpeedMultiplier());
+				object->setState(std::make_shared<GhostChasingState>(object, ghostManager, nullptr)); // change to chasing
+				break;
+			}
+			else
+			{
+				if (currentNode == nextNode)
+				{
+					auto nextTarget = lastRoute.getNextNode();
+					if (nextTarget) {
+						nextNode = nextTarget;
+					}
+				}
+
+				moveTo(object, nextNode, by);
+			}
 		}
 	}
 	catch (std::exception& e)
@@ -96,11 +96,6 @@ void GhostChasingPillState::check()
 		}
 	}
 
-}
-
-void GhostChasingPillState::updateAvgCatchTime()
-{
-	ghostManager->updateAvgCatchTime(this);
 }
 
 void GhostChasingPillState::accept(BaseVisitor * bv, BaseObject * bo)

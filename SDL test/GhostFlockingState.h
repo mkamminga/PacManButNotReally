@@ -8,6 +8,5 @@ public:
 	virtual void update(double deltaTime);
 	virtual void check();
 	virtual void accept(BaseVisitor* bv, BaseObject* bo);
-	virtual void updateAvgCatchTime() {}
 };
 

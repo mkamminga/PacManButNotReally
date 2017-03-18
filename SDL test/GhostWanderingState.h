@@ -21,6 +21,5 @@ public:
 	virtual void check();
 	virtual void update(double deltaTime);
 	virtual void accept(BaseVisitor* bv, BaseObject* bo);
-	virtual void updateAvgCatchTime();
 	virtual void tick();
 };

@@ -29,6 +29,7 @@ void SparseGraph::shortestPathTo(ShortestRoute& lastShortestRoute, std::shared_p
 		lastShortestRoute.goal = goal;
 
 		lastShortestRoute.resetRoute();
+		
 		if (cachedRoutes.find(make_pair(start, goal)) == cachedRoutes.end())
 		{
 			if (cachedRoutes.size() >= cachedRouteLimit)

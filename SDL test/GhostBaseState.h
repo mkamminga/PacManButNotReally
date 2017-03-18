@@ -12,4 +12,3 @@ public:
 	GhostBaseState(std::shared_ptr<GamePlayObject> object, std::shared_ptr<GhostManager> ghostManager) : ghostManager(ghostManager), BaseState(object) {}
 	std::shared_ptr<GhostManager> getGhostManager();
 };
-

@@ -3,11 +3,13 @@
 #include "BasicTimer.h"
 #include "GraphNode.h"
 #include <map>
+#include <string>
 
 class GhostBaseState;
 class GhostWanderingState;
 class GhostChasingState;
 class GhostChasingPillState;
+class GhostBaseState;
 
 class GhostManager : public BasicTimerRegisterAble, public std::enable_shared_from_this<GhostManager>
 {
@@ -15,8 +17,11 @@ private:
 	std::vector<std::shared_ptr<GhostObject>> ghosts;
 	std::vector<std::shared_ptr<GraphNode>> spawningGrounds;
 	std::map<std::string, int> chances;
+	std::map<std::shared_ptr<GamePlayObject>, std::string> firstStates;
 	int totalNumberOfChanceDist = 0;
-	long time;
+	int numOfGhosts = 0;
+	double avgTime = 0;
+	int time = 0;
 public:
 	GhostManager() 
 	{
@@ -31,8 +36,5 @@ public:
 	std::shared_ptr<GhostBaseState> getNextRandomState(std::shared_ptr<GamePlayObject> object, std::shared_ptr<GraphNode> target);
 	std::vector<std::shared_ptr<GhostObject>> getSpawnedGhosts();
 	virtual void tick();
-
-	void updateAvgCatchTime(GhostWanderingState*);
-	void updateAvgCatchTime(GhostChasingState*);
-	void updateAvgCatchTime(GhostChasingPillState*);
+	void updateAvgCatchTime(std::shared_ptr<GamePlayObject> object);
 };

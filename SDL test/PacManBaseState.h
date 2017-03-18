@@ -11,7 +11,6 @@ public:
 	PacManBaseState(std::shared_ptr<GamePlayObject> object) : BaseState(object) {}
 	virtual void update(double deltaTime);
 	virtual void check();
-	virtual void updateAvgCatchTime();
 	virtual void accept(BaseVisitor* bv, BaseObject* bo) {}
 
 private:

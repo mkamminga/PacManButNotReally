@@ -29,11 +29,6 @@ void GhostWanderingState::accept(BaseVisitor * bv, BaseObject * bo)
 	bv->visit(this, bo);
 }
 
-void GhostWanderingState::updateAvgCatchTime()
-{
-	ghostManager->updateAvgCatchTime(this);
-}
-
 void GhostWanderingState::tick()
 {
 	if (wanderingTime > 0)

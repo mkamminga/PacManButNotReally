@@ -23,11 +23,6 @@ void GamePlayObject::setState(std::shared_ptr<BaseState> state)
 	currentState = state;
 }
 
-std::shared_ptr<BaseState> GamePlayObject::getFirstState()
-{
-	return firstState;
-}
-
 std::shared_ptr<BaseState> GamePlayObject::getState()
 {
 	return currentState;

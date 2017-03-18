@@ -16,9 +16,8 @@ public:
 	virtual void accept(BaseVisitor* bv, BaseObject* bo) = 0;
 	std::shared_ptr<GraphNode> getNextTarget();
 	std::shared_ptr<GamePlayObject> getObject();
-	virtual void updateAvgCatchTime() = 0;
 protected:
-	int moveBy(int from, int to, int by);
-	void moveTo(std::shared_ptr<GamePlayObject> objectToUpdate, std::shared_ptr<GraphNode> target, int by);
-	void moveTo(std::shared_ptr<GamePlayObject> objectToUpdate, std::shared_ptr<GamePlayObject> objectToMoveTo, int by);
+	int moveBy(int from, int to, int& by);
+	void moveTo(std::shared_ptr<GamePlayObject> objectToUpdate, std::shared_ptr<GraphNode> target, int& by);
+	void moveTo(std::shared_ptr<GamePlayObject> objectToUpdate, std::shared_ptr<GamePlayObject> objectToMoveTo, int& by);
 };
