@@ -95,14 +95,14 @@ void Game::start()
 	graph->addItem(pill4);
 	//pacman
 	auto packman = std::make_shared<PacManObject>(50);
+	this->pacman = packman;
+
 	vertex250->addObject(packman);
 
 	ghostManager->addSpawningGround(vertex103);
 	ghostManager->addSpawningGround(vertex114);
 	ghostManager->addSpawningGround(vertex157);
 	ghostManager->addSpawningGround(vertex162);
-
-	ghostManager->spawn(packman);
 	
 	graph->addNode( vertex104 );
 	graph->addNode( vertex105 );
@@ -266,16 +266,35 @@ void Game::start()
 		objects.push_back(node);
 	}
 
-	updateableGamePlayObjects.push_back(packman);
-	auto ghosts = ghostManager->getSpawnedGhosts();
-	std::copy(ghosts.begin(), ghosts.end(), std::back_inserter(updateableGamePlayObjects));
-
 	mainTimer.subscribe(ghostManager);
+
+	startNewGeneration();
 }
 
 std::shared_ptr<SparseGraph> Game::getGraph()
 {
 	return graph;
+}
+
+bool Game::shouldStartNewGeneration()
+{
+	return pacman && pacman->getHealth() == 0;
+}
+
+void Game::startNewGeneration()
+{
+	if (updateableGamePlayObjects.size() != 0)
+	{
+		//not first time spawn, so lets reset some ket values and remove the previous generation
+		updateableGamePlayObjects.clear();
+		ghostManager->resetForNextGeneration();
+		pacman->setHealth(100);
+	}
+
+	updateableGamePlayObjects.push_back(pacman);
+	ghostManager->spawn(pacman);
+	auto ghosts = ghostManager->getSpawnedGhosts();
+	std::copy(ghosts.begin(), ghosts.end(), std::back_inserter(updateableGamePlayObjects));
 }
 
 std::vector<std::shared_ptr<BaseVisitiable>>& Game::gameObjects()

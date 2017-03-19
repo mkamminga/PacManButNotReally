@@ -20,9 +20,13 @@ void GhostChasingState::update(double deltaTime)
 			{
 				object->setX(1100 - (object->getX() / 10));
 				object->setY(object->getY() - (object->getY() / 10));
+				//remove from object
+				currentNode->removeObject(object);
+				object->setNode(nullptr);
 				//TODO: update pacman speed
 				pacman->setHealth(pacman->getHealth() - 1);
 				ghostManager->updateAvgCatchTime(object);
+
 				object->setState(std::make_shared<GhostFlockingState>(object, ghostManager)); // change to chasing
 				break;
 

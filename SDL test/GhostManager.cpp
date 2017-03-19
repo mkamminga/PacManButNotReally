@@ -100,7 +100,7 @@ void GhostManager::tick()
 
 		}
 
-		std::cout << "AVG time: " << avgTime << "\n\n";
+		std::cout << "AVG time: " << (avgTime / numOfGhosts) << "\n\n";
 	}
 }
 
@@ -109,27 +109,38 @@ void GhostManager::updateAvgCatchTime(std::shared_ptr<GamePlayObject> object)
 	if (firstStates.find(object) != firstStates.end())
 	{
 		auto state = firstStates[object];
-
-		if (numOfGhosts > 0)
+		numOfGhosts++;
+		if (numOfGhosts > 1)
 		{
 			if (time < avgTime)
 			{
-				chances[state]+= 5;
-				totalNumberOfChanceDist+= 5;
+				chances[state]+= 8;
+				totalNumberOfChanceDist+= 8;
 			}
 			else if (time > avgTime && chances[state] > 5) // limit of one, there should always be some chance
 			{
 				chances[state]-= 5;
 				totalNumberOfChanceDist-= 5;
 			}
-
-			avgTime = (avgTime + time) * 1.00 / numOfGhosts;
+			avgTime += time;
 		}
 		else
 		{
 			avgTime = time;
-			numOfGhosts++;
 		}
+		
 		//TODO: update avg time 
 	}
+}
+
+void GhostManager::resetForNextGeneration()
+{
+	time = 0;
+	firstStates.clear();
+	for (auto ghost : ghosts)
+	{
+		ghost->setState(nullptr);
+	}
+
+	ghosts.clear();
 }

@@ -37,4 +37,5 @@ public:
 	std::vector<std::shared_ptr<GhostObject>> getSpawnedGhosts();
 	virtual void tick();
 	void updateAvgCatchTime(std::shared_ptr<GamePlayObject> object);
+	void resetForNextGeneration();
 };

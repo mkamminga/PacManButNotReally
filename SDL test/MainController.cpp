@@ -92,6 +92,12 @@ void MainController::update(double deltaTime)
 	{
 		object->update(deltaTime);
 	}
+
+	if (game.shouldStartNewGeneration())
+	{
+		updateableObjects.clear();
+		game.startNewGeneration();
+	}
 }
 
 void MainController::shutdown()
