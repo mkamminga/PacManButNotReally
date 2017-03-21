@@ -289,10 +289,15 @@ void Game::startNewGeneration()
 		updateableGamePlayObjects.clear();
 		ghostManager->resetForNextGeneration();
 		pacman->setHealth(100);
+
+		ghostManager->spawnByCrossover(pacman);
+	}
+	else
+	{
+		ghostManager->spawn(pacman);
 	}
 
 	updateableGamePlayObjects.push_back(pacman);
-	ghostManager->spawn(pacman);
 	auto ghosts = ghostManager->getSpawnedGhosts();
 	std::copy(ghosts.begin(), ghosts.end(), std::back_inserter(updateableGamePlayObjects));
 }

@@ -63,7 +63,7 @@ std::shared_ptr<Route> SparseGraph::search(std::shared_ptr<GraphNode> start, std
 	std::unordered_map<std::shared_ptr<GraphNode>, std::shared_ptr<GraphNode>> came_from; 
 	std::unordered_map<std::shared_ptr<GraphNode>, double> cost_so_far;
 
-	auto cmp = [](std::pair<double, std::shared_ptr<GraphNode>> left, std::pair<double, std::shared_ptr<GraphNode>> right) { return left.first > right.first; };
+	auto cmp = [](const std::pair<double, std::shared_ptr<GraphNode>>& left, const std::pair<double, std::shared_ptr<GraphNode>>& right) { return left.first > right.first; };
 
 	std::priority_queue<std::pair<double, std::shared_ptr<GraphNode>>, std::vector<std::pair<double, std::shared_ptr<GraphNode>>>, decltype(cmp)> frontier(cmp);
 	frontier.push(std::make_pair(0, start));

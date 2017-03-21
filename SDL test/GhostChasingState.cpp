@@ -26,6 +26,7 @@ void GhostChasingState::update(double deltaTime)
 				//TODO: update pacman speed
 				pacman->setHealth(pacman->getHealth() - 1);
 				ghostManager->updateAvgCatchTime(object);
+				ghostManager->addToCrossoverList(object);
 
 				object->setState(std::make_shared<GhostFlockingState>(object, ghostManager)); // change to chasing
 				break;
