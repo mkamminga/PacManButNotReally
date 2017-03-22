@@ -48,6 +48,7 @@ private:
 	std::map< std::pair< std::shared_ptr<GraphNode>, std::shared_ptr<GraphNode> >, std::shared_ptr<Route>> cachedRoutes;
 	int cachedRouteLimit = 2000;
 	int cachedRouteIndex = 0;
+	int distanceMulitplier = 1;
 public:
 	void addNode(std::shared_ptr<GraphNode>);
 	const vector<std::shared_ptr<GraphNode>>& getNodes() const;
@@ -56,8 +57,6 @@ public:
 	void shortestPathTo(ShortestRoute& lastShortestRoute, std::shared_ptr<GraphNode> start, std::shared_ptr<GraphNode> goal);
 	std::shared_ptr<Route> search(std::shared_ptr<GraphNode> start, std::shared_ptr<GraphNode> goal);
 	const double calcDistance(const std::shared_ptr<GraphNode>, const std::shared_ptr<GraphNode>) const;
+	void setDistanceMulitplier(int distanceMulitplier);
+	int getDistanceMulitplier();
 };
-
-
-
-

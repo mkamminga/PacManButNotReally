@@ -156,6 +156,7 @@
     <ClCompile Include="BaseObject.cpp" />
     <ClCompile Include="BaseState.cpp" />
     <ClCompile Include="BasicTimer.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GamePlayObject.cpp" />
     <ClCompile Include="GhostBaseState.cpp" />
@@ -186,6 +187,8 @@
     <ClInclude Include="BaseVisitiable.h" />
     <ClInclude Include="BaseVisitor.h" />
     <ClInclude Include="BasicTimer.h" />
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="Dimensions.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GamePlayObject.h" />
     <ClInclude Include="GhostBaseState.h" />

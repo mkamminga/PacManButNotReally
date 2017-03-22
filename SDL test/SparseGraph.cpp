@@ -58,6 +58,16 @@ const double SparseGraph::calcDistance(const std::shared_ptr<GraphNode> from, co
 	return abs(from->getY() - to->getY()) + abs(from->getX() - to->getX());
 }
 
+void SparseGraph::setDistanceMulitplier(int distanceMulitplier)
+{
+	this->distanceMulitplier = distanceMulitplier;
+}
+
+int SparseGraph::getDistanceMulitplier()
+{
+	return distanceMulitplier;
+}
+
 std::shared_ptr<Route> SparseGraph::search(std::shared_ptr<GraphNode> start, std::shared_ptr<GraphNode> goal)
 {
 	std::unordered_map<std::shared_ptr<GraphNode>, std::shared_ptr<GraphNode>> came_from; 

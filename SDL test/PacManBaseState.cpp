@@ -3,13 +3,12 @@
 #include "PillItem.h"
 #include "Random.h"
 #include "GamePlayObject.h"
+#include "SparseGraph.h"
 #include <iostream>
 
 void PacManBaseState::update(double deltaTime)
 {
-	auto by = (int)(ceil(object->getSpeed() * (object->getHealth() * 0.01) * deltaTime));
-
-	auto num = (double)object->getSpeed() * (object->getHealth() * 0.01);
+	auto by = (int)(ceil(object->getSpeed() * object->getNode()->getGraph()->getDistanceMulitplier() * (object->getHealth() * 0.01) * deltaTime));
 
 	while (by > 0)
 	{

@@ -180,7 +180,7 @@ void GhostManager::tick()
 {
 	time++;
 
-	if (time == 1 || time % 5 == 0)
+	if (time == 1 || time % informationTicks == 0)
 	{
 		double percentages = 0;
 
@@ -219,22 +219,26 @@ void GhostManager::updateAvgCatchTime(std::shared_ptr<GamePlayObject> object)
 		{
 			if (time < avgTime)
 			{
-				chances[state]+= 100;
-				totalNumberOfChanceDist+= 100;
+				chances[state]+= 1;
+				totalNumberOfChanceDist+= 1;
 			}
-			else if (time > avgTime && chances[state] > 5) // limit of one, there should always be some chance
+			else if (time > avgTime && chances[state] > 0) // limit of one, there should always be some chance
 			{
-				chances[state]-= 100;
-				totalNumberOfChanceDist-= 100;
+				chances[state]-= 1;
+				totalNumberOfChanceDist-= 1;
+
+				if (totalNumberOfChanceDist <= 0)
+				{
+					totalNumberOfChanceDist = 1;
+				}
 			}
+
 			avgTime += time;
 		}
 		else
 		{
 			avgTime = time;
 		}
-		
-		//TODO: update avg time 
 	}
 }
 
@@ -258,6 +262,11 @@ void GhostManager::resetForNextGeneration()
 	}
 
 	ghosts.clear();
+}
+
+void GhostManager::setDisplayInformationTicks(int ticks)
+{
+	informationTicks = ticks;
 }
 
 void GhostManager::selectForNextGeneration(std::list<std::shared_ptr<GamePlayObject>>& selectedCrossOverList)

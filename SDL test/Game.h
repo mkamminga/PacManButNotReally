@@ -24,4 +24,5 @@ public:
 	void startNewGeneration();
 	std::vector<std::shared_ptr<BaseVisitiable>>& gameObjects();
 	std::vector<std::shared_ptr<GamePlayObject>>& gamePlayObjects();
+	void speedUp();
 };

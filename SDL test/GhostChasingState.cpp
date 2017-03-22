@@ -5,7 +5,7 @@
 void GhostChasingState::update(double deltaTime)
 {
 
-	auto by = (int)(ceil(object->getSpeed() * deltaTime));
+	auto by = (int)(ceil(object->getSpeed() * object->getNode()->getGraph()->getDistanceMulitplier() * deltaTime));
 
 	while (by > 0)
 	{

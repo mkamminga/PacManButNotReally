@@ -311,3 +311,11 @@ std::vector<std::shared_ptr<GamePlayObject>>& Game::gamePlayObjects()
 {
 	return updateableGamePlayObjects;
 }
+
+void Game::speedUp()
+{
+	mainTimer.pause();
+	mainTimer.setTimer(100);
+	graph->setDistanceMulitplier(10);
+	mainTimer.resume();
+}

@@ -13,10 +13,17 @@ class BasicTimer
 private:
 	std::mutex mtx;
 	bool started;
+	bool paused;
+	bool stopped;
 	std::vector<std::shared_ptr<BasicTimerRegisterAble>> subscribers;
+	int timer = 0;
 public:
 	BasicTimer() {};
-	void start(int timer);
+	void start();
+	void setTimer(int timer);
+	int getTimer();
+	void pause();
+	void resume();
 	void stop();
 	void reset();
 	void subscribe(std::shared_ptr<BasicTimerRegisterAble> registerable);

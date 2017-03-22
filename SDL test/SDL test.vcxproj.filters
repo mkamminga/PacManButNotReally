@@ -132,6 +132,9 @@
     <ClCompile Include="GhostFlockingState.cpp">
       <Filter>Source Files\Models\Objects\States</Filter>
     </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Source Files\Views</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainVisitor.h">
@@ -214,6 +217,12 @@
     </ClInclude>
     <ClInclude Include="GhostFlockingState.h">
       <Filter>Header Files\Models\Objects\GamePlay\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Header Files\Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Dimensions.h">
+      <Filter>Header Files\Base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

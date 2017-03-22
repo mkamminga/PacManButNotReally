@@ -1,6 +1,7 @@
 #include "BaseState.h"
 #include "GraphNode.h"
 #include "GamePlayObject.h"
+#include "SparseGraph.h"
 #include <iostream>
 
 std::shared_ptr<GraphNode> BaseState::getNextTarget()
@@ -52,8 +53,8 @@ int BaseState::moveBy(int from, int to, int& by)
 
 void BaseState::moveTo(std::shared_ptr<GamePlayObject> objectToUpdate, std::shared_ptr<GraphNode> target, int& by)
 {
-	int moveByRemainingX = by;
-	int moveByRemainingY = by;
+	int moveByRemainingX	= by;
+	int moveByRemainingY	= by;
 
 	if (objectToUpdate->getX() != target->getX())
 	{
@@ -90,8 +91,8 @@ void BaseState::moveTo(std::shared_ptr<GamePlayObject> objectToUpdate, std::shar
 
 void BaseState::moveTo(std::shared_ptr<GamePlayObject> objectToUpdate, std::shared_ptr<GamePlayObject> objectToMoveTo, int& by)
 {
-	int moveByRemainingX = by;
-	int moveByRemainingY = by;
+	int moveByRemainingX	= by;
+	int moveByRemainingY	= by;
 
 	if (objectToUpdate->getX() != objectToMoveTo->getX())
 	{

@@ -11,7 +11,7 @@ void GhostChasingPillState::update(double deltaTime)
 	}
 
 	try {
-		auto by = (int)(ceil(object->getSpeed() * deltaTime));
+		auto by = (int)(ceil(object->getSpeed() * object->getNode()->getGraph()->getDistanceMulitplier() * deltaTime));
 
 		while (by > 0)
 		{
@@ -19,7 +19,7 @@ void GhostChasingPillState::update(double deltaTime)
 			if (currentNode == target)
 			{
 				//multiply speed by the multiplier
-				object->setSpeed(object->getSpeed() * object->getSpeedMultiplier());
+				object->setSpeed(object->getSpeed() * object->getNode()->getGraph()->getDistanceMulitplier() * object->getSpeedMultiplier());
 				object->setState(std::make_shared<GhostChasingState>(object, ghostManager, nullptr)); // change to chasing
 				break;
 			}

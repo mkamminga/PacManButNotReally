@@ -26,6 +26,7 @@ private:
 	int numOfGhosts				= 0;
 	double avgTime				= 0;
 	int time					= 0;
+	int informationTicks		= 5;
 
 public:
 	GhostManager() 
@@ -45,6 +46,7 @@ public:
 	void updateAvgCatchTime(std::shared_ptr<GamePlayObject> object);
 	void addToCrossoverList(std::shared_ptr<GamePlayObject> object);
 	void resetForNextGeneration();
+	void setDisplayInformationTicks(int ticks);
 private:
 	void selectForNextGeneration(std::list<std::shared_ptr<GamePlayObject>>& selectedCrossOverList);
 	void matchSelections(std::list<std::shared_ptr<GamePlayObject>>& selectedCrossOverList, std::list<std::pair<std::shared_ptr<GamePlayObject>, std::shared_ptr<GamePlayObject>>> & selectedMatchedCrossOverList);

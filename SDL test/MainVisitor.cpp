@@ -9,9 +9,13 @@
 #include "GhostWanderingState.h"
 #include "GhostChasingState.h"
 #include "GhostChasingPillState.h"
+#include <memory>
+
 
 void MainVisitor::setRenderer(SDL_Renderer * renderer)
 {
+	fastButton.setRender(renderer);
+	fastButton.setPosition(1000, 50);
 	this->renderer = renderer;
 	textures["map"]							= IMG_LoadTexture(renderer, "images/xid-2600189_1.png"); 
 	textures["pacman"]						= IMG_LoadTexture(renderer, "images/xid-2600194_1.png"); 
@@ -38,6 +42,8 @@ void MainVisitor::draw(std::vector<std::shared_ptr<BaseVisitiable>>& objects)
 	{
 		object->accept(this);
 	}
+
+	fastButton.draw();
 
 	SDL_RenderPresent(renderer);
 
@@ -88,9 +94,6 @@ void MainVisitor::visit(PillItem * pill)
 	drawObjectTexture(pill, textures["pill"], &position);
 }
 
-void MainVisitor::visit(GhostObject * ghost)
-{
-}
 
 void MainVisitor::visit(PacManObject * pacman)
 {
@@ -139,4 +142,22 @@ void MainVisitor::drawObjectTexture(BaseObject * object, SDL_Texture * texture, 
 	position->y = (object->getY() - (position->h / 2));
 
 	SDL_RenderCopy(renderer, texture, NULL, position);
+}
+
+void MainVisitor::listenForEvents(SDL_Event & SDLEvent)
+{
+	while (SDLEvent.type != SDL_QUIT) { // waiting for events to happen
+
+		while (SDL_PollEvent(&SDLEvent)) {
+			if (SDLEvent.type == SDL_MOUSEBUTTONUP)
+			{
+				auto x = SDLEvent.button.x;
+				auto y = SDLEvent.button.y;
+				//Has the button been clicked
+				if (fastButton.hasBeenClicked(x, y)) {
+					return;
+				}
+			}
+		}
+	}
 }

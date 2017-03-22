@@ -24,7 +24,8 @@ void MainController::play()
 	game.start();
 	
 	std::thread mainTimer([]() {
-		mainTimer.start(1);
+		mainTimer.setTimer(1000);
+		mainTimer.start();
 	});
 	
 	
@@ -49,7 +50,7 @@ void MainController::play()
 			update(1.00 / 600.00 * deltaTime);
 			draw();
 			lastTime = currentTime;
-			std::this_thread::sleep_for(std::chrono::milliseconds(20));
+			std::this_thread::sleep_for(std::chrono::milliseconds(25));
 		}
 	}
 	catch (exception& e)
@@ -67,17 +68,20 @@ void MainController::draw()
 
 int MainController::feel()
 {
+	bool spedUp = false;
 	while (!done) { // waiting for events to happen
 		SDL_Event event;
 
-		while (SDL_PollEvent(&event)) {
-			if (event.type == SDL_QUIT) {
-				done = true;
-			}
-			else if (event.type == SDL_MOUSEBUTTONUP)
-			{
-				//return 2;
-			}
+		mainView.listenForEvents(event);
+
+		if (event.type == SDL_QUIT) {
+			done = true;
+		}
+		else if (event.type == SDL_MOUSEBUTTONUP && !spedUp)
+		{
+			game.speedUp();
+
+			spedUp = true;
 		}
 	}
 

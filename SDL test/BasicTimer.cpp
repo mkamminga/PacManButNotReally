@@ -6,10 +6,9 @@
 
 BasicTimer mainTimer;
 
-void BasicTimer::start(int timer)
+void BasicTimer::start()
 {
 	started = true;
-	using namespace std::chrono_literals;
 	while (started)
 	{
 		mtx.lock();
@@ -18,14 +17,45 @@ void BasicTimer::start(int timer)
 		{
 			subscriber->tick();
 		}
+		int remainingTimeToSleep = timer;
+		int steps = (timer > 10 ? timer / (timer / 10) : timer);
+		
 		mtx.unlock();
-		std::this_thread::sleep_for(std::chrono::seconds(timer));
+		while (remainingTimeToSleep > 0 && started && !paused) {
+			std::this_thread::sleep_for(std::chrono::microseconds(steps));
+			remainingTimeToSleep -= steps;
+		}
+
+		while (paused); // wait while paused
 	}
+}
+
+void BasicTimer::setTimer(int timer)
+{
+	mtx.lock();
+	this->timer = timer;
+	mtx.unlock();
+}
+
+int BasicTimer::getTimer()
+{
+	return timer;
+}
+
+void BasicTimer::pause()
+{
+	paused = true;
+}
+
+void BasicTimer::resume()
+{
+	paused = false;
 }
 
 void BasicTimer::stop()
 {
 	started = false;
+	reset();
 }
 
 void BasicTimer::reset()
