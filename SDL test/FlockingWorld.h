@@ -13,7 +13,9 @@ private:
 	Dimension dimensions;
 public:
 	FlockingWorld(const Dimension& d) :  dimensions(d) {}
+	const Dimension& getDimension() const;
 	void addObject(std::shared_ptr<GamePlayObject>);
+	const std::vector<std::shared_ptr<GamePlayObject>>& getObjects() const;
 	void clear();
 	void wrap(Vector2D& pos);
 };

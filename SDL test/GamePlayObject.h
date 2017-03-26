@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseObject.h"
 #include "BaseState.h"
+#include "Vector2D.h"
 
 class GamePlayObject :
 	public BaseObject, public std::enable_shared_from_this<GamePlayObject>
@@ -11,6 +12,7 @@ protected:
 	std::shared_ptr<BaseState> currentState = nullptr;
 	std::shared_ptr<BaseState> firstState = nullptr;
 	std::shared_ptr<GamePlayObject> target;
+	Vector2D heading;
 	int health = 100;
 	int speed;
 	int speedmultiplier;
@@ -36,5 +38,8 @@ public:
 	int getSpeed();
 	void setSpeed(int speed);
 	int getSpeedMultiplier();
+	Vector2D& getHeading();
+	void setHeading(const Vector2D& heading);
+	const Vector2D getPosition() const;
 	std::shared_ptr<GamePlayObject> getTarget();
 };

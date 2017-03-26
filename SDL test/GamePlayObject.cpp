@@ -71,6 +71,25 @@ int GamePlayObject::getSpeedMultiplier()
 	return speedmultiplier;
 }
 
+Vector2D & GamePlayObject::getHeading()
+{
+	return heading;
+}
+
+void GamePlayObject::setHeading(const Vector2D & heading)
+{
+	this->heading = heading;
+}
+
+const Vector2D GamePlayObject::getPosition() const
+{
+	Vector2D position;
+	position.x = x;
+	position.y = y;
+
+	return position;
+}
+
 std::shared_ptr<GamePlayObject> GamePlayObject::getTarget()
 {
 	return target;

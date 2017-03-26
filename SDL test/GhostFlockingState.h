@@ -17,6 +17,8 @@ private:
 
 	Vector2D m_TargetPos;
 
+	Vector2D m_vWanderTarget;
+
 	double m_dMass;
 	//the maximum speed at which this entity may travel.
 	double m_dMaxSpeed;
@@ -26,7 +28,7 @@ private:
 	//the maximum rate (radians per second) at which this vehicle can rotate
 	double m_dMaxTurnRate;
 
-	std::vector<std::shared_ptr<GamePlayObject>> closeNeighbours;
+	std::vector<std::shared_ptr<GamePlayObject>>					closeNeighbours;
 
 	std::shared_ptr<FlockingWorld>									flockingWorld = nullptr;
 public:
@@ -39,9 +41,11 @@ public:
 private:
 	Vector2D calculateSteering(const double& dt);
 	void tagCloseNeighbors();
+	bool AccumulateForce(Vector2D &RunningTot, Vector2D ForceToAdd);
 	Vector2D separation(const std::vector < std::shared_ptr<GamePlayObject>>& neighbors);
 	Vector2D alignment(const std::vector < std::shared_ptr<GamePlayObject>>& neighbors);
-	Vector2D seek();
+	Vector2D cohesion(const std::vector < std::shared_ptr<GamePlayObject>>& neighbors);
+	Vector2D seek(Vector2D target);
 	Vector2D wander(const double& dt);
 };
 
