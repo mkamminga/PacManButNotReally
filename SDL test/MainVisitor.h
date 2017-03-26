@@ -9,6 +9,7 @@
 #include "Button.h"
 
 class BaseObject;
+class GamePlayObject;
 
 class MainVisitor : public BaseVisitor
 {
@@ -22,7 +23,7 @@ private:
 
 public:
 	void setRenderer(SDL_Renderer* renderer);
-	void draw(std::vector<std::shared_ptr<BaseVisitiable>>& objects);
+	void draw(std::vector<std::shared_ptr<BaseVisitiable>>& nodes, std::vector<std::shared_ptr<GamePlayObject>>& objects);
 	virtual void visit(GraphNode* graphNode);
 	virtual void visit(PillItem* pillItem);
 	virtual void visit(PacManObject* pacman);

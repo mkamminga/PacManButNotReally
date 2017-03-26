@@ -18,13 +18,12 @@ void GhostChasingState::update(double deltaTime)
 
 			if (object->getX() == pacman->getX() && object->getY() == pacman->getY())
 			{
-				object->setX(1100 - (object->getX() / 10));
-				object->setY(object->getY() - (object->getY() / 10));
 				//remove from object
 				currentNode->removeObject(object);
 				object->setNode(nullptr);
 				//TODO: update pacman speed
 				pacman->setHealth(pacman->getHealth() - 1);
+
 				ghostManager->updateAvgCatchTime(object);
 				ghostManager->addToCrossoverList(object);
 
@@ -61,7 +60,7 @@ void GhostChasingState::update(double deltaTime)
 void GhostChasingState::check()
 {
 	auto currentNode = object->getNode();
-	auto currentTargetNode = object->getTarget()->getNode();
+	auto currentTargetNode = object->getTarget()->getState()->getNextTarget();
 
 	if (!lastRoute.initialized || (targetNode != currentTargetNode && nextNode && currentNode == nextNode))
 	{

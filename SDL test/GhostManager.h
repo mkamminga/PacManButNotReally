@@ -2,6 +2,7 @@
 #include "GhostObject.h"
 #include "BasicTimer.h"
 #include "GraphNode.h"
+#include "FlockingWorld.h"
 #include <map>
 #include <string>
 #include <list>
@@ -21,12 +22,13 @@ private:
 
 	std::map<std::shared_ptr<GamePlayObject>, std::string>			firstStates;
 	std::vector<std::pair<int, std::shared_ptr<GamePlayObject>>>	crossoverList;
+	std::shared_ptr<FlockingWorld>									flockingWorld = nullptr;
 
 	int totalNumberOfChanceDist = 0;
 	int numOfGhosts				= 0;
 	double avgTime				= 0;
 	int time					= 0;
-	int informationTicks		= 5;
+	int informationTicks		= 0;
 
 public:
 	GhostManager() 
@@ -36,6 +38,11 @@ public:
 		chances["chasing_pacman"]	= 33;
 
 		totalNumberOfChanceDist		= chances.size() * 33;
+		informationTicks = 5;
+
+		Dimension d {600, 600, 600, 1200, 0, 600};
+
+		flockingWorld = std::make_shared<FlockingWorld>(d);
 	}
 	void addSpawningGround(std::shared_ptr<GraphNode> spawningGround);
 	void spawn(std::shared_ptr<GamePlayObject> target);
@@ -47,6 +54,7 @@ public:
 	void addToCrossoverList(std::shared_ptr<GamePlayObject> object);
 	void resetForNextGeneration();
 	void setDisplayInformationTicks(int ticks);
+	std::shared_ptr<FlockingWorld> getWorld();
 private:
 	void selectForNextGeneration(std::list<std::shared_ptr<GamePlayObject>>& selectedCrossOverList);
 	void matchSelections(std::list<std::shared_ptr<GamePlayObject>>& selectedCrossOverList, std::list<std::pair<std::shared_ptr<GamePlayObject>, std::shared_ptr<GamePlayObject>>> & selectedMatchedCrossOverList);

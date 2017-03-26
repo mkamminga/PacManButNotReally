@@ -26,7 +26,7 @@ void MainVisitor::setRenderer(SDL_Renderer * renderer)
 	textures["pill"]						= IMG_LoadTexture(renderer, "images/pill.png");
 }
 
-void MainVisitor::draw(std::vector<std::shared_ptr<BaseVisitiable>>& objects)
+void MainVisitor::draw(std::vector<std::shared_ptr<BaseVisitiable>>& nodes, std::vector<std::shared_ptr<GamePlayObject>>& objects)
 {
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
 	SDL_RenderClear(renderer);
@@ -38,7 +38,12 @@ void MainVisitor::draw(std::vector<std::shared_ptr<BaseVisitiable>>& objects)
 
 	SDL_RenderCopy(renderer, textures["map"], NULL, &position);
 
-	for (auto object : objects)
+	for (auto node : nodes) // draw nodes
+	{
+		node->accept(this);
+	}
+
+	for (auto object : objects) // draw objects
 	{
 		object->accept(this);
 	}
@@ -68,13 +73,6 @@ void MainVisitor::visit(GraphNode * node)
 			nodesVisited.push_back(make_pair(from, to)); // add both combinations
 			nodesVisited.push_back(make_pair(to, from));
 		}
-	}
-
-	auto objects = node->getObjects();
-
-	for (auto object : objects)
-	{
-		object->accept(this);
 	}
 
 	auto items = node->getItems();
@@ -129,8 +127,8 @@ void MainVisitor::visit(GhostChasingPillState * ghostWandering, BaseObject * bo)
 
 void MainVisitor::visit(GhostFlockingState * ghostWandering, BaseObject * bo)
 {
-	position.w = 40;
-	position.h = 40;
+	position.w = 50;
+	position.h = 50;
 
 	drawObjectTexture(bo, textures["ghost_afterlife"], &position);
 }

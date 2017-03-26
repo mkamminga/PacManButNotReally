@@ -46,7 +46,7 @@ private:
 	std::vector<std::shared_ptr<GraphNode>> nodes;
 	std::vector<std::shared_ptr<Item>> items;
 	std::map< std::pair< std::shared_ptr<GraphNode>, std::shared_ptr<GraphNode> >, std::shared_ptr<Route>> cachedRoutes;
-	int cachedRouteLimit = 2000;
+	int cachedRouteLimit = 4000;
 	int cachedRouteIndex = 0;
 	int distanceMulitplier = 1;
 public:

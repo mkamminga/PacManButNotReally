@@ -135,6 +135,12 @@
     <ClCompile Include="Button.cpp">
       <Filter>Source Files\Views</Filter>
     </ClCompile>
+    <ClCompile Include="Vector2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FlockingWorld.cpp">
+      <Filter>Source Files\Models</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainVisitor.h">
@@ -222,6 +228,15 @@
       <Filter>Header Files\Views</Filter>
     </ClInclude>
     <ClInclude Include="Dimensions.h">
+      <Filter>Header Files\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FlockingWorld.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="utils.h">
       <Filter>Header Files\Base</Filter>
     </ClInclude>
   </ItemGroup>

@@ -22,7 +22,7 @@ void BasicTimer::start()
 		
 		mtx.unlock();
 		while (remainingTimeToSleep > 0 && started && !paused) {
-			std::this_thread::sleep_for(std::chrono::microseconds(steps));
+			std::this_thread::sleep_for(std::chrono::milliseconds(steps));
 			remainingTimeToSleep -= steps;
 		}
 

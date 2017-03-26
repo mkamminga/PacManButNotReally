@@ -179,6 +179,7 @@ std::vector<std::shared_ptr<GhostObject>> GhostManager::getSpawnedGhosts()
 void GhostManager::tick()
 {
 	time++;
+	int a = 5;
 
 	if (time == 1 || time % informationTicks == 0)
 	{
@@ -245,8 +246,8 @@ void GhostManager::updateAvgCatchTime(std::shared_ptr<GamePlayObject> object)
 void GhostManager::addToCrossoverList(std::shared_ptr<GamePlayObject> object)
 {
 	int value	=	10000 - time; // subtract the time it took to catch pacman
-	value		+=	2000 - (object->getWanderingTime() * 2200);
-	value		+=	ceil(object->getSpeed() * 40);
+	value		-= (object->getWanderingTime() * 1000);
+	value		+=	ceil(object->getSpeed() * 20);
 	value		+=	object->getSpeedMultiplier() * 100;
 
 	crossoverList.push_back(make_pair(value, object));
@@ -262,11 +263,17 @@ void GhostManager::resetForNextGeneration()
 	}
 
 	ghosts.clear();
+	flockingWorld->clear();
 }
 
 void GhostManager::setDisplayInformationTicks(int ticks)
 {
 	informationTicks = ticks;
+}
+
+std::shared_ptr<FlockingWorld> GhostManager::getWorld()
+{
+	return flockingWorld;
 }
 
 void GhostManager::selectForNextGeneration(std::list<std::shared_ptr<GamePlayObject>>& selectedCrossOverList)
@@ -316,14 +323,14 @@ void GhostManager::selectForNextGeneration(std::list<std::shared_ptr<GamePlayObj
 	if (numToCrossover > 0 )
 	{
 		//Sort by decimals
-		auto cmp = [](const std::pair<double, std::shared_ptr<GamePlayObject>>& left, const std::pair<double, std::shared_ptr<GamePlayObject>>& right) { 
+		/*auto cmp = [](const std::pair<double, std::shared_ptr<GamePlayObject>>& left, const std::pair<double, std::shared_ptr<GamePlayObject>>& right) { 
 			double leftValue	= left.first - ((int)left.first);
 			double rightValue	= right.first - ((int)right.first);
 			
 			return leftValue > rightValue;
 		};
 		//Add selected decimals until
-		sortedProjectedBreadingPotentialList.sort(cmp);
+		sortedProjectedBreadingPotentialList.sort(cmp);*/
 		for (auto item : sortedProjectedBreadingPotentialList) // copy until requierd num of objects is reached
 		{
 			selectedCrossOverList.push_back(item.second);
@@ -362,8 +369,8 @@ void GhostManager::matchSelections(std::list<std::shared_ptr<GamePlayObject>>& s
 
 int GhostManager::crossOverValues(int base, int with, int separateOn)
 {
-	int bitLengh = floor(log2(base)) + 1;
-	int shiftBy = bitLengh - separateOn;
+	int bitLengh = floor(log2(base)) + 1;	// determine bit length
+	int shiftBy = bitLengh - separateOn;	// determine shift position
 	
 	if (shiftBy < 0)
 	{
@@ -371,10 +378,10 @@ int GhostManager::crossOverValues(int base, int with, int separateOn)
 	}
 
 	if (bitLengh > 1) {
-		base = (base >> shiftBy) << shiftBy; // shift to left and right leaving the needed bits
+		base = (base >> shiftBy) << shiftBy; // shift to left, and right leaving the needed bits
 	}
 
-	int numberOFBits = (int)pow(2, shiftBy);
+	int numberOFBits = shiftBy * shiftBy;
 	if (numberOFBits <= 1)
 	{
 		numberOFBits = 2;

@@ -63,7 +63,8 @@ void MainController::play()
 
 void MainController::draw()
 {
-	mainView.draw(game.gameObjects());
+	auto updateableObjects = game.gamePlayObjects();
+	mainView.draw(game.gameObjects(), updateableObjects);
 }
 
 int MainController::feel()

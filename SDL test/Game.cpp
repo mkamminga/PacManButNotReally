@@ -317,5 +317,6 @@ void Game::speedUp()
 	mainTimer.pause();
 	mainTimer.setTimer(100);
 	graph->setDistanceMulitplier(10);
+	ghostManager->setDisplayInformationTicks(18);
 	mainTimer.resume();
 }

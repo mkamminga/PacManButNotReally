@@ -157,6 +157,7 @@
     <ClCompile Include="BaseState.cpp" />
     <ClCompile Include="BasicTimer.cpp" />
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="FlockingWorld.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GamePlayObject.cpp" />
     <ClCompile Include="GhostBaseState.cpp" />
@@ -177,6 +178,7 @@
     <ClCompile Include="PillItem.cpp" />
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="SparseGraph.cpp" />
+    <ClCompile Include="Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\SDL test\SDL test\PillItem.h" />
@@ -189,6 +191,7 @@
     <ClInclude Include="BasicTimer.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Dimensions.h" />
+    <ClInclude Include="FlockingWorld.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GamePlayObject.h" />
     <ClInclude Include="GhostBaseState.h" />
@@ -208,6 +211,8 @@
     <ClInclude Include="Random.h" />
     <ClInclude Include="SparseGraph.h" />
     <ClInclude Include="TypeDefs.h" />
+    <ClInclude Include="utils.h" />
+    <ClInclude Include="Vector2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
