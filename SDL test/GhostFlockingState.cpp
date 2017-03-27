@@ -2,12 +2,10 @@
 #include "GamePlayObject.h"
 #include "GhostManager.h"
 #include "Random.h"
-const double SeeingRad = 20;
-//the radius of the constraining circle for the wander behavior
+
+const double SeeingRad = 30;
 const double WanderRad = 6;
-//distance the wander circle is projected in front of the agent
 const double WanderDist = 6.0;
-//the maximum amount of displacement along the circle each frame
 const double WanderJitterPerSec = 80.0;
 
 const double SeparationWeight	= 25.0;
@@ -25,52 +23,47 @@ GhostFlockingState::GhostFlockingState(std::shared_ptr<GamePlayObject> object, s
 
 	uniform_int_distribution<int> xdist{ dimension.x0 ,  dimension.x1 };
 	uniform_int_distribution<int> ydist{ dimension.y0 ,  dimension.y1 };
-	m_vPos.x = xdist(dre);
-	m_vPos.y = ydist(dre);
+	position.x = xdist(dre);
+	position.y = ydist(dre);
 
 
-	m_dMaxSpeed = 110.0;
-	m_dMass = 2.0;
-	m_dMaxTurnRate = 3.0;
-	m_dMaxForce = 20.0;
+	maxSpeed = 110.0;
+	mass =4.0;
+	maxTurnRate = 3.0;
+	maxForce = 20.0;
 
 	double theta = RandFloat() * TwoPi;
 }
-//
-//
-//SteeringForce            2.0
-//MaxSpeed                 150.0
-//VehicleMass              1.0
-//VehicleScale             3.0
+
 void GhostFlockingState::update(double deltaTime)
 {
 	//calculate the combined force from each steering behavior in the
 	//vehicle’s list
 	Vector2D SteeringForce = calculateSteering(deltaTime);
 
-	Vector2D acceleration = SteeringForce / m_dMass;
+	Vector2D acceleration = SteeringForce / mass;
 
 	//update velocity
-	m_vVelocity += acceleration * deltaTime;
+	velocity += acceleration * deltaTime;
 
 	//make sure vehicle does not exceed maximum velocity
-	m_vVelocity.Truncate(m_dMaxSpeed);
+	velocity.Truncate(maxSpeed);
 	//update the position
-	m_vPos += m_vVelocity * deltaTime;
+	position += velocity * deltaTime;
 
 	//update the heading if the vehicle has a velocity greater than a very small
 	//value
-	if (m_vVelocity.LengthSq() > 0.00000001)
+	if (velocity.LengthSq() > 0.00000001)
 	{
-		m_vHeading = Vec2DNormalize(m_vVelocity);
-		object->setHeading(m_vHeading);
-		m_vSide = m_vHeading.Perp();
+		heading = Vec2DNormalize(velocity);
+		object->setHeading(heading);
+		side = heading.Perp();
 
-		flockingWorld->wrap(m_vPos);
+		flockingWorld->wrap(position);
 	}
 
-	object->setX(m_vPos.x);
-	object->setY(m_vPos.y);
+	object->setX(position.x);
+	object->setY(position.y);
 
 	closeNeighbours.clear();
 }
@@ -87,7 +80,7 @@ void GhostFlockingState::accept(BaseVisitor * bv, BaseObject * bo)
 
 const Vector2D& GhostFlockingState::getPosition() const
 {
-	return m_vPos;
+	return position;
 }
 
 Vector2D GhostFlockingState::calculateSteering(const double& dt)
@@ -97,29 +90,31 @@ Vector2D GhostFlockingState::calculateSteering(const double& dt)
 	
 	force = separation(closeNeighbours) * SeparationWeight;
 
-	if (!AccumulateForce(total, force))
+	if (!accumulateForce(total, force))
 	{
 		return total;
 	}
 
 	force = cohesion(closeNeighbours) * CohesionWeight;
 
-	if (!AccumulateForce(total, force)) {
+	if (!accumulateForce(total, force)) {
 		return total;
 	}
 
 	force = alignment(closeNeighbours) * AlignmentWeight;
 
-	if (!AccumulateForce(total, force))
+	if (!accumulateForce(total, force))
 	{
 		return total;
 	}
 
 	force = wander(dt) * WanderWeight;
-	if (!AccumulateForce(total, force))
+
+	if (!accumulateForce(total, force))
 	{
 		return total;
 	}
+
 	return total;
 }
 
@@ -133,7 +128,7 @@ void GhostFlockingState::tagCloseNeighbors()
 		{
 			continue;
 		}
-		Vector2D to = posibleNeighbor->getPosition() - m_vPos;
+		Vector2D to = posibleNeighbor->getPosition() - position;
 
 		//the bounding radius of the other is taken into account by adding it 
 		//to the range
@@ -149,7 +144,7 @@ void GhostFlockingState::tagCloseNeighbors()
 	}//next entity
 }
 
-bool GhostFlockingState::AccumulateForce(Vector2D &RunningTot,
+bool GhostFlockingState::accumulateForce(Vector2D &RunningTot,
 	 Vector2D ForceToAdd)
 {
 
@@ -157,7 +152,7 @@ bool GhostFlockingState::AccumulateForce(Vector2D &RunningTot,
 	double MagnitudeSoFar = RunningTot.Length();
 
 	//calculate how much steering force remains to be used by this vehicle
-	double MagnitudeRemaining = m_dMaxForce - MagnitudeSoFar;
+	double MagnitudeRemaining = maxForce - MagnitudeSoFar;
 
 	//return false if there is no more force left to use
 	if (MagnitudeRemaining <= 0.0) return false;
@@ -185,10 +180,10 @@ bool GhostFlockingState::AccumulateForce(Vector2D &RunningTot,
 
 Vector2D GhostFlockingState::seek(Vector2D target)
 {
-	Vector2D DesiredVelocity = Vec2DNormalize(target - m_vPos)
-		* m_dMaxSpeed;
+	Vector2D DesiredVelocity = Vec2DNormalize(target - position)
+		* maxSpeed;
 
-	return (DesiredVelocity - m_vVelocity);
+	return (DesiredVelocity - velocity);
 }
 
 Vector2D GhostFlockingState::separation(const std::vector < std::shared_ptr<GamePlayObject>>& neighbors)
@@ -197,11 +192,8 @@ Vector2D GhostFlockingState::separation(const std::vector < std::shared_ptr<Game
 
 	for (auto neighbor : neighbors)
 	{
-		//make sure this agent isn't included in the calculations and that
-		//the agent being examined is close enough. ***also make sure it doesn't
-		//include the evade target ***
 
-		Vector2D ToAgent = m_vPos - neighbor->getPosition();
+		Vector2D ToAgent = position - neighbor->getPosition();
 
 		//scale the force inversely proportional to the agents distance  
 		//from its neighbor.
@@ -211,11 +203,6 @@ Vector2D GhostFlockingState::separation(const std::vector < std::shared_ptr<Game
 	return SteeringForce;
 }
 
-//---------------------------- Alignment ---------------------------------
-//
-//  returns a force that attempts to align this agents heading with that
-//  of its neighbors
-//------------------------------------------------------------------------
 Vector2D GhostFlockingState::alignment(const std::vector < std::shared_ptr<GamePlayObject>>& neighbors)
 {
 	//used to record the average heading of the neighbors
@@ -227,17 +214,12 @@ Vector2D GhostFlockingState::alignment(const std::vector < std::shared_ptr<GameP
 	//iterate through all the tagged vehicles and sum their heading vectors  
 	for (auto neighbor : neighbors)
 	{
-		//make sure *this* agent isn't included in the calculations and that
-		//the agent being examined  is close enough ***also make sure it doesn't
-		//include any evade target ***
-
 		AverageHeading += neighbor->getHeading();
 
 		++NeighborCount;
 	}
 
-	//if the neighborhood contained one or more vehicles, average their
-	//heading vectors.
+	//Align with the avg heading of all close neighbors
 	if (NeighborCount > 0)
 	{
 		AverageHeading /= (double)NeighborCount;
@@ -248,12 +230,6 @@ Vector2D GhostFlockingState::alignment(const std::vector < std::shared_ptr<GameP
 	return AverageHeading;
 }
 
-
-//-------------------------------- Cohesion ------------------------------
-//
-//  returns a steering force that attempts to move the agent towards the
-//  center of mass of the agents in its immediate area
-//------------------------------------------------------------------------
 Vector2D GhostFlockingState::cohesion(const std::vector < std::shared_ptr<GamePlayObject>>& neighbors)
 {
 	//first find the center of mass of all the agents
@@ -261,18 +237,15 @@ Vector2D GhostFlockingState::cohesion(const std::vector < std::shared_ptr<GamePl
 
 	int NeighborCount = 0;
 
-	//iterate through all the tagged vehicles and sum their heading vectors  
 	for (auto neighbor : neighbors)
 	{
-		//make sure *this* agent isn't included in the calculations and that
-		//the agent being examined is close enough ***also make sure it doesn't
-		//include the evade target ***
+
 
 		CenterOfMass += neighbor->getPosition();
 
 		++NeighborCount;
 	}
-
+	//If any neighbors, move to the center of mass
 	if (NeighborCount > 0)
 	{
 		//the center of mass is the average of the sum of positions
@@ -282,28 +255,23 @@ Vector2D GhostFlockingState::cohesion(const std::vector < std::shared_ptr<GamePl
 		SteeringForce = seek(CenterOfMass);
 	}
 
-	//the magnitude of cohesion is usually much larger than separation or
-	//allignment so it usually helps to normalize it.
+	//return a smaller version
 	return Vec2DNormalize(SteeringForce);
 }
 
 Vector2D GhostFlockingState::wander(const double& dt)
 {
-	//to the range
-	//this behavior is dependent on the update rate, so this line must
-	//be included when using time independent framerate.
 	double JitterThisTimeSlice = WanderJitterPerSec * dt;
-
-	//first, add a small random vector to the target's position
-	m_vWanderTarget += Vector2D(RandomClamped() * JitterThisTimeSlice,
+	//Add rand target
+	wanderTarget += Vector2D(RandomClamped() * JitterThisTimeSlice,
 		RandomClamped() * JitterThisTimeSlice);
 
 	//reproject this new vector back on to a unit circle
-	m_vWanderTarget.Normalize();
+	wanderTarget.Normalize();
 
 	//increase the length of the vector to the same as the radius
 	//of the wander circle
-	m_vWanderTarget *= WanderRad;
+	wanderTarget *= WanderRad;
 
-	return  m_vWanderTarget;
+	return  wanderTarget;
 }

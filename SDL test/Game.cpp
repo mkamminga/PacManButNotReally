@@ -14,7 +14,7 @@ void Game::start()
 	auto vertex104 = std::make_shared<GraphNode>(34,  120, graph);
 	auto vertex105 = std::make_shared<GraphNode>(136, 117, graph);
 	auto vertex106 = std::make_shared<GraphNode>(136,  45, graph);
-	auto vertex107 = std::make_shared<GraphNode>(261,  45, graph);
+	auto vertex107 = std::make_shared<GraphNode>(261,  45, graph); // Spawn
 	auto vertex108 = std::make_shared<GraphNode>(261, 114, graph);
 	auto vertex109 = std::make_shared<GraphNode>(320, 114, graph);
 	auto vertex110 = std::make_shared<GraphNode>(320,  45, graph);
@@ -30,7 +30,7 @@ void Game::start()
 	auto vertex121 = std::make_shared<GraphNode>(258, 173, graph);
 	auto vertex122 = std::make_shared<GraphNode>(258, 229, graph);
 	auto vertex123 = std::make_shared<GraphNode>(320, 226, graph);
-	auto vertex124 = std::make_shared<GraphNode>(320, 173, graph);
+	auto vertex124 = std::make_shared<GraphNode>(320, 173, graph); // Spawn
 	auto vertex125 = std::make_shared<GraphNode>(378, 229, graph);
 	auto vertex126 = std::make_shared<GraphNode>(439, 285, graph);
 	auto vertex127 = std::make_shared<GraphNode>(381, 285, graph);
@@ -54,18 +54,18 @@ void Game::start()
 	auto vertex145 = std::make_shared<GraphNode>(261, 402, graph);
 	auto vertex146 = std::make_shared<GraphNode>(197, 400, graph);
 	auto vertex147 = std::make_shared<GraphNode>(133, 400, graph);
-	auto vertex148 = std::make_shared<GraphNode>(34,  400, graph);
-	auto vertex149 = std::make_shared<GraphNode>(77,  458, graph);
+	auto vertex148 = std::make_shared<GraphNode>(34,  400, graph); // Spawn
+	auto vertex149 = std::make_shared<GraphNode>(77,  458, graph); // Spawn
 	auto vertex150 = std::make_shared<GraphNode>(77,  509, graph);
 	auto vertex151 = std::make_shared<GraphNode>(138, 506, graph);
-	auto vertex152 = std::make_shared<GraphNode>(136, 456, graph);
-	auto vertex153 = std::make_shared<GraphNode>(200, 456, graph);
+	auto vertex152 = std::make_shared<GraphNode>(136, 456, graph); // Spawn
+	auto vertex153 = std::make_shared<GraphNode>(200, 456, graph); // Spawn
 	auto vertex154 = std::make_shared<GraphNode>(200, 512, graph);
 	auto vertex155 = std::make_shared<GraphNode>(258, 514, graph);
 	auto vertex156 = std::make_shared<GraphNode>(258, 565, graph);
 	auto vertex158 = std::make_shared<GraphNode>(34,  512, graph);
-	auto vertex159 = std::make_shared<GraphNode>(320, 565, graph);
-	auto vertex160 = std::make_shared<GraphNode>(320, 514, graph);
+	auto vertex159 = std::make_shared<GraphNode>(320, 565, graph); 
+	auto vertex160 = std::make_shared<GraphNode>(320, 514, graph); 
 	auto vertex161 = std::make_shared<GraphNode>(378, 512, graph);
 	auto vertex163 = std::make_shared<GraphNode>(544, 514, graph);
 	auto vertex224 = std::make_shared<GraphNode>(261, 456, graph);
@@ -103,6 +103,15 @@ void Game::start()
 	ghostManager->addSpawningGround(vertex114);
 	ghostManager->addSpawningGround(vertex157);
 	ghostManager->addSpawningGround(vertex162);
+
+	ghostManager->addSpawningGround(vertex159);
+	ghostManager->addSpawningGround(vertex160);
+	ghostManager->addSpawningGround(vertex148);
+	ghostManager->addSpawningGround(vertex149);
+
+	ghostManager->addSpawningGround(vertex107);
+	ghostManager->addSpawningGround(vertex124);
+
 	
 	graph->addNode( vertex104 );
 	graph->addNode( vertex105 );

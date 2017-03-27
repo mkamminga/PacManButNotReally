@@ -7,26 +7,17 @@ class GhostFlockingState :
 	public GhostBaseState
 {
 private:
-	Vector2D m_vVelocity;
-	//a normalized vector pointing in the direction the entity is heading.
-	Vector2D m_vHeading;
-	//a vector perpendicular to the heading vector
-	Vector2D m_vSide;
+	Vector2D velocity;
+	Vector2D heading;
+	Vector2D side;
+	Vector2D position;
+	Vector2D targetPosition;
+	Vector2D wanderTarget;
 
-	Vector2D m_vPos;
-
-	Vector2D m_TargetPos;
-
-	Vector2D m_vWanderTarget;
-
-	double m_dMass;
-	//the maximum speed at which this entity may travel.
-	double m_dMaxSpeed;
-	//the maximum force this entity can produce to power itself
-	//(think rockets and thrust)
-	double m_dMaxForce;
-	//the maximum rate (radians per second) at which this vehicle can rotate
-	double m_dMaxTurnRate;
+	double mass;
+	double maxSpeed;
+	double maxForce;
+	double maxTurnRate;
 
 	std::vector<std::shared_ptr<GamePlayObject>>					closeNeighbours;
 
@@ -41,7 +32,7 @@ public:
 private:
 	Vector2D calculateSteering(const double& dt);
 	void tagCloseNeighbors();
-	bool AccumulateForce(Vector2D &RunningTot, Vector2D ForceToAdd);
+	bool accumulateForce(Vector2D &RunningTot, Vector2D ForceToAdd);
 	Vector2D separation(const std::vector < std::shared_ptr<GamePlayObject>>& neighbors);
 	Vector2D alignment(const std::vector < std::shared_ptr<GamePlayObject>>& neighbors);
 	Vector2D cohesion(const std::vector < std::shared_ptr<GamePlayObject>>& neighbors);

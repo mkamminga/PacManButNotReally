@@ -21,7 +21,7 @@ void GhostManager::spawn(std::shared_ptr<GamePlayObject> target)
 	int overallSpeedmultiplier = 0;
 	for (auto node : spawningGrounds)
 	{
-		for (int i = 0; i < 25; i++)
+		for (int i = 0; i < 10; i++)
 		{
 			auto speedMulitplier			= speedMultiplierDist(dre);
 			auto wanderingTime				= wanderingTimeDist(dre);
@@ -71,7 +71,7 @@ void GhostManager::spawnByCrossover(std::shared_ptr<GamePlayObject> target)
 
 	for (auto node : spawningGrounds)
 	{
-		for (int i = 0; i < 25; i++)
+		for (int i = 0; i < 10; i++)
 		{
 			auto objects = it.operator*();
 
